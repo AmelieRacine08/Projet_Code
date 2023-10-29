@@ -6,12 +6,12 @@ import database from "../connexion.js"
 
 //Creation du  modele etudiant
 
-export const Etudiant = database.define(`Etudiant`,{
-    nom:{
+export const Utilisateur = database.define(`Utilisateur`,{
+    prenom:{
         type: DataTypes.STRING, 
         allowNull:false
     },
-    prenom:{
+    nom:{
         type: DataTypes.STRING, 
         allowNull:false
     },
