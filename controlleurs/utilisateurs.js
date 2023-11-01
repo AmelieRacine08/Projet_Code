@@ -7,9 +7,9 @@ export const ajouterUtilisateur = async(req,res)=>{
 
     try{
         await Utilisateur.create(Utilisateur)
-        res.status(201).json({message:"L'utilisateur a ete ajouter avec succes"})
+        res.status(201).json({message:"L'utilisateur a été ajouté avec succès"})
     }catch(error){
-        res.status(400).json({message:"Probleme avec la creation de l'utilisateur"})
+        res.status(400).json({message:"Problème avec la création de l'utilisateur"})
     }
 }
 
