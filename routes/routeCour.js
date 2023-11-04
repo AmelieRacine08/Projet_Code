@@ -6,9 +6,9 @@ import {ajouterCour, listeCour, CourParId, supprimerCour,updateCour } from "../c
 const routesCour = Router()
 
 routesCour.get('/', listeCour)
-.get('/:id', CourParId)
-.post ('/', ajouterCour)
-.put('/:id', updateCour)
-.delete('/:id', supprimerCour)
+    .get('/:id', CourParId)
+    .post ('/', ajouterCour)
+    .put('/:id', updateCour)
+    .delete('/:id', supprimerCour)
 
-export default routesCour
+    export default routesCour

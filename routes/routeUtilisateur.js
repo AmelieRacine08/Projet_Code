@@ -6,9 +6,9 @@ import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisa
 const routesUtilisteur = Router()
 
 routesUtilisteur.get('/', listeUtilisateur)
-.get('/:id', UtilisateurParId)
-.post ('/', ajouterUtilisateur)
-.put('/:id', updateUtilisateur)
-.delete('/:id', supprimerUtilisateur)
+    .get('/:id', UtilisateurParId)
+    .post ('/', ajouterUtilisateur)
+    .put('/:id', updateUtilisateur)
+    .delete('/:id', supprimerUtilisateur)
 
-export default routesUtilisteur
+    export default routesUtilisteur

@@ -6,9 +6,9 @@ import {ajouterHoraire, listeHoraire, HoraireParId, supprimerHoraire,updateHorai
 const routesHoraire = Router()
 
 routesHoraire.get('/', listeHoraire)
-.get('/:id', HoraireParId)
-.post ('/', ajouterHoraire)
-.put('/:id', updateHoraire)
-.delete('/:id', supprimerHoraire)
+    .get('/:id', HoraireParId)
+    .post ('/', ajouterHoraire)
+    .put('/:id', updateHoraire)
+    .delete('/:id', supprimerHoraire)
 
-export default routesHoraire
+    export default routesHoraire

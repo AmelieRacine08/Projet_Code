@@ -6,9 +6,9 @@ import {ajouterBulletin, listeBulletin, BulletinParId, supprimerBulletin,updateB
 const routesBulletin = Router()
 
 routesBulletin.get('/', listeBulletin)
-.get('/:id', BulletinParId)
-.post ('/', ajouterBulletin)
-.put('/:id', updateBulletin)
-.delete('/:id', supprimerBulletin)
-
+    .get('/:id', BulletinParId)
+    .post ('/', ajouterBulletin)
+    .put('/:id', updateBulletin)
+    .delete('/:id', supprimerBulletin)
+    
 export default routesBulletin
