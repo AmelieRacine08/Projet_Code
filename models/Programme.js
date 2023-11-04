@@ -11,7 +11,7 @@ export const Programme = database.define(`Programme`,{
         type: DataTypes.STRING, 
         allowNull:false
     },
-    date_de_début:{
+    date_de_debut:{
         type:DataTypes.DATEONLY,
         allowNull: false
     },

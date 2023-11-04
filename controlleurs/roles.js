@@ -1,4 +1,4 @@
-import{Role} from "../models/Role.js"
+import{Role} from "../models/index.js"
 
 export const ajouterRole = async(req,res)=>{
 
@@ -29,7 +29,7 @@ export const RoleParId = async(req,res)=>{
     const id = req.params.id
     console.log(id)
     try{
-        const role = await Role.findByPk(id) // utiliser findByPk puisqu'on chercher pour l'ID
+        const role = await Role.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
         res.status(200).json({data:role})
     }catch(error){
         res.status(404).json({message:error.message})
@@ -40,7 +40,7 @@ export const supprimerRole = async(req,res)=>{
 
     const id = req.params.id
     if(!parseInt(id)){
-        return  res.status(200).json({message:"Erreur ! Vous devez entrer un entier ici"})
+        return  res.status(200).json({message:"Vous devez entrer un entier ici"})
     }
     try{
 

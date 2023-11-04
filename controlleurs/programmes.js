@@ -1,12 +1,12 @@
-import { Programme } from "../models/Programme.js";
+import { Programme } from "../models/index.js";
 
 export const ajouterProgramme = async(req,res)=>{
 
     const{programme_id,nom_du_programme,date_de_début,date_de_fin} = req.body 
-    const Programme = {programme_id,nom_du_programme,date_de_début,date_de_fin} 
+    const programme = {programme_id,nom_du_programme,date_de_début,date_de_fin} 
 
     try{
-        await Programme.create(Programme)
+        await Programme.create(programme)
         res.status(201).json({message:"Le programme a été ajouté avec succès"})
     }catch(error){
         res.status(400).json({message:"Problème avec la création du programme"})
@@ -29,7 +29,7 @@ export const ProgrammeParId = async(req,res)=>{
     const id = req.params.id
     console.log(id)
     try{
-        const programme = await Programme.findByPk(id) // utiliser findByPk puisqu'on chercher pour l'ID
+        const programme = await Programme.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
         res.status(200).json({data:programme})
     }catch(error){
         res.status(404).json({message:error.message})
@@ -40,7 +40,7 @@ export const supprimerProgramme = async(req,res)=>{
 
     const id = req.params.id
     if(!parseInt(id)){
-        return  res.status(200).json({message:"Erreur ! Vous devez entrer un entier ici"})
+        return  res.status(200).json({message:"Vous devez entrer un entier ici"})
     }
     try{
 

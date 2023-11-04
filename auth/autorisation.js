@@ -1,9 +1,8 @@
 //Importer jwt
 import  Jwt  from "jsonwebtoken";
 
-const verifierToken = (req,res,next)=>{
+export const verifierToken = (req,res,next)=>{
     //Recuperation du token
-
     const bearerToken = req.headers.authorization
 
     //Verification de la presence du token

@@ -1,12 +1,19 @@
-import { Utilisateur } from "../models/Utilisateur.js";
+import { Utilisateur } from "../models/index.js"
+
+//Importer le module de hashage
+import bcrypt from "bcryptjs"
+
 
 export const ajouterUtilisateur = async(req,res)=>{
 
     const{nom,prenom,email,motDePasse,dateDeNaissance} = req.body 
-    const Utilisateur = {nom,prenom,email,motDePasse,dateDeNaissance} 
+    //Hasher le mot de passe
+    const mdpCrypt = bcrypt.hashSync(motDePasse,10)
+
+    const utilisateur = {nom,prenom,email,motDePasse:mdpCrypt,dateDeNaissance} 
 
     try{
-        await Utilisateur.create(Utilisateur)
+        await Utilisateur.create(utilisateur)
         res.status(201).json({message:"L'utilisateur a été ajouté avec succès"})
     }catch(error){
         res.status(400).json({message:"Problème avec la création de l'utilisateur"})
@@ -27,7 +34,7 @@ export const listeUtilisateur= async(req,res)=>{
 export const UtilisateurParId = async(req,res)=>{
 
     const id = req.params.id
-    console.log(id)
+    console.log("notre id",id)
     try{
         const utilisateur = await Utilisateur.findByPk(id) // utiliser findByPk puisqu'on chercher pour l'ID
         res.status(200).json({data:utilisateur})
@@ -45,10 +52,10 @@ export const supprimerUtilisateur = async(req,res)=>{
     try{
 
         await Utilisateur.destroy({where:{id}})
-        res.status(200).json({message:"L'utilisateur a ete supprimer avec succes"})
+        res.status(200).json({message:"L'utilisateur a été supprimé avec succès"})
 
     }catch(error){
-        res.status(400).json({message:"Probleme avec la suppression de l'utilisateur"})
+        res.status(400).json({message:"Problème avec la suppression de l'utilisateur"})
     }
 }
 
@@ -57,9 +64,9 @@ export const updateUtilisateur = async(req,res)=>{
     const {id} = req.params
     const nouvelleUtilisateur = req.body
     try{
-        await Etudiant.update(nouvelleUtilisateur,{where:{id}})
-        res.status(201).json({message:"L'utilisateur a ete mise a jour avec succes"})
+        await Utilisateur.update(nouvelleUtilisateur,{where:{id}})
+        res.status(201).json({message:"L'utilisateur a été mise a jour avec succès"})
     }catch(error){
-        res.status(400).json({message:"Probleme avec la mise a jour de l'utilisateur"})
+        res.status(400).json({message:"Problème avec la mise a jour de l'utilisateur"})
     }
 }
