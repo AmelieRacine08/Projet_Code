@@ -1,14 +1,12 @@
 // fonction permettant de creer des routes
 
 import {Router} from "express"
-import {ajouterEtudiant, etudiantParId, listEtudiant, modifierEtudiant, supprimerEtudiant} from "../controlleurs/utilisateurs.js"
+import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
 
 const routesUtilisteur = Router()
 
-//Les routes deviennent - mettre a jour selon controlleur Amelie
-
-router.get('/', listEtudiant)
-.get('/:id', etudiantParId)
-.post ('/', ajouterEtudiant)
-.put('/:id', modifierEtudian)
-.delete('/:id', supprimerEtudiantEtudian)
+router.get('/', listeUtilisateur)
+.get('/:id', UtilisateurParId)
+.post ('/', ajouterUtilisateur)
+.put('/:id', updateUtilisateur)
+.delete('/:id', supprimerUtilisateur)
