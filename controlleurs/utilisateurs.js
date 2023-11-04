@@ -1,5 +1,6 @@
 import { Utilisateur } from "../models/Utilisateur.js";
 
+
 export const ajouterUtilisateur = async(req,res)=>{
 
     const{nom,prenom,email,motDePasse,dateDeNaissance} = req.body 

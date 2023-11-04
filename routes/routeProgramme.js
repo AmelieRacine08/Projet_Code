@@ -5,8 +5,10 @@ import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, u
 
 const routesProgramme = Router()
 
-router.get('/', listeProgramme)
+routesProgramme.get('/', listeProgramme)
 .get('/:id', ProgrammeParId)
 .post ('/', ajouterProgramme)
 .put('/:id', updateProgramme)
 .delete('/:id', supprimerProgramme)
+
+export default routesProgramme

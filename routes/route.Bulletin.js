@@ -5,8 +5,10 @@ import {ajouterBulletin, listeBulletin, BulletinParId, supprimerBulletin,updateB
 
 const routesBulletin = Router()
 
-router.get('/', listeBulletin)
+routesBulletin.get('/', listeBulletin)
 .get('/:id', BulletinParId)
 .post ('/', ajouterBulletin)
 .put('/:id', updateBulletin)
 .delete('/:id', supprimerBulletin)
+
+export default routesBulletin
