@@ -83,13 +83,12 @@ app.get('/bulletins/:id', BulletinParId)
 //Utilisation des routes
 
 app.use('/utilisateurs', routesUtilisteur)
-app.use('/roles', routesUtilisteur)
-app.use('/programmes', routesUtilisteur)
-app.use('/horaires', routesUtilisteur)
-app.use('/examens', routesUtilisteur)
-app.use('/cours', routesUtilisteur)
-app.use('/bulletins', routesUtilisteur)
-
+app.use('/roles', routesRole)
+app.use('/programmes', routesProgramme)
+app.use('/horaires', routesHoraire)
+app.use('/examens', routesExamen)
+app.use('/cours', routesCour)
+app.use('/bulletins', routesBulletin)
 
 
 
