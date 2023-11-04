@@ -2,10 +2,11 @@
 
 import {Router} from "express"
 import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
+import { verifierToken } from "../auth/autorisation.js"
 
 const routesUtilisteur = Router()
 
-routesUtilisteur.get('/', listeUtilisateur)
+routesUtilisteur.get('/', verifierToken, listeUtilisateur)
     .get('/:id', UtilisateurParId)
     .post ('/', ajouterUtilisateur)
     .put('/:id', updateUtilisateur)

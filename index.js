@@ -22,6 +22,7 @@ import routesHoraire from './routes/routeHoraire.js'
 import routesExamen from './routes/routeExamen.js'
 import routesCour from './routes/routeCour.js'
 import routesBulletin from './routes/route.Bulletin.js'
+import routerAuth from './routes/routeAuth.js'
 
 database.sync()
 
@@ -92,8 +93,8 @@ app.use('/bulletins', routesBulletin)
 
 
 
-//Login ---------------------------------------------faire
-//app.use('/login', router.Auth)
+//Login
+app.use('/login', routerAuth)
 
 
 app.listen(PORT, () => console.log(`Le serveur tourne sur le port ${PORT}`))
