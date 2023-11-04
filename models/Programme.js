@@ -7,11 +7,6 @@ import database from "../connexion.js"
 //Creation du  modele programme
 
 export const Programme = database.define(`Programme`,{
-    programme_id: { 
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
     nom_du_programme:{
         type: DataTypes.STRING, 
         allowNull:false

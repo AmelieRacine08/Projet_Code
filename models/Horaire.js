@@ -7,11 +7,6 @@ import database from "../connexion.js"
 //Creation du  modele horaire
 
 export const Horaire = database.define(`Horaire`,{
-    horaire_id: { 
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
     jour_de_semaine:{
         type: DataTypes.STRING, 
         allowNull:false
