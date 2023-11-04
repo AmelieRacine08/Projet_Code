@@ -5,8 +5,10 @@ import {ajouterRole, listeRole, RoleParId, supprimerRole, updateRole} from "../c
 
 const routesRole = Router()
 
-router.get('/', listeRole)
-.get('/:id', RoleParId)
-.post ('/', ajouterRole)
-.put('/:id', updateRole)
-.delete('/:id', supprimerRole)
+routesRole.get('/', listeRole)
+    .get('/:id', RoleParId)
+    .post ('/', ajouterRole)
+    .put('/:id', updateRole)
+    .delete('/:id', supprimerRole)
+
+    export default routesRole

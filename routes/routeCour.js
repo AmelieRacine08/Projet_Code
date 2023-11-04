@@ -5,8 +5,10 @@ import {ajouterCour, listeCour, CourParId, supprimerCour,updateCour } from "../c
 
 const routesCour = Router()
 
-router.get('/', listeCour)
-.get('/:id', CourParId)
-.post ('/', ajouterCour)
-.put('/:id', updateCour)
-.delete('/:id', supprimerCour)
+routesCour.get('/', listeCour)
+    .get('/:id', CourParId)
+    .post ('/', ajouterCour)
+    .put('/:id', updateCour)
+    .delete('/:id', supprimerCour)
+
+    export default routesCour

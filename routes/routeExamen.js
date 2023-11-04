@@ -5,8 +5,10 @@ import {ajouterExamen, listeExamen, ExamenParId, supprimerExamen,updateExamen } 
 
 const routesExamen = Router()
 
-router.get('/', listeExamen)
-.get('/:id', ExamenParId)
-.post ('/', ajouterExamen)
-.put('/:id', updateExamen)
-.delete('/:id', supprimerExamen)
+routesExamen.get('/', listeExamen)
+    .get('/:id', ExamenParId)
+    .post ('/', ajouterExamen)
+    .put('/:id', updateExamen)
+    .delete('/:id', supprimerExamen)
+
+    export default routesExamen
