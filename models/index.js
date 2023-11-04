@@ -1,12 +1,12 @@
 //Importer tous les modeles
 
-import Utilisateur from "./Utilisateur.js";
-import Role from "./Role.js";
-import Programme from "./Programme.js";
-import Bulletin from "./Bulletin.js";
-import Cour from "./Cour.js";
-import Examen from "./Examen.js";
-import Horaire from "./Horaire.js";
+import {Utilisateur} from "./Utilisateur.js"
+import {Role} from "./Role.js";
+import {Programme} from "./Programme.js";
+import {Bulletin} from "./Bulletin.js";
+import {Cour} from "./Cour.js";
+import {Examen} from "./Examen.js";
+import {Horaire} from "./Horaire.js";
 
 //Appliquer les relations (associations)
 Utilisateur.hasOne(Role)
@@ -21,7 +21,7 @@ Programme.hasMany(Utilisateur)
 Programme.belongsToMany(Cour)
 Cour.belongsToMany(Programme)
 
-Cours.hasMany(Examen)
+Cour.hasMany(Examen)
 Examen.hasOne(Cour)
 
 Cour.belongsToMany(Horaire)
