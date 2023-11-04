@@ -4,6 +4,7 @@ import { Utilisateur } from "../models/index.js"
 import bcrypt from "bcryptjs"
 
 
+
 export const ajouterUtilisateur = async(req,res)=>{
 
     const{nom,prenom,email,motDePasse,dateDeNaissance} = req.body 

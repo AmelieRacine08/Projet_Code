@@ -93,7 +93,7 @@ app.use('/bulletins', routesBulletin)
 
 
 //Login ---------------------------------------------faire
-app.use('/login', router.Auth)
+//app.use('/login', router.Auth)
 
 
 app.listen(PORT, () => console.log(`Le serveur tourne sur le port ${PORT}`))
