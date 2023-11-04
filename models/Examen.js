@@ -7,11 +7,6 @@ import database from "../connexion.js"
 //Creation du  modele examen
 
 export const Examen = database.define(`Examen`,{
-    examen_id: { 
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
     matiere:{
         type: DataTypes.STRING, 
         allowNull:false

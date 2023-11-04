@@ -8,8 +8,6 @@ import {Cour} from "./Cour.js";
 import {Examen} from "./Examen.js";
 import {Horaire} from "./Horaire.js";
 
-//Ajouter table supplementaire n-n??????
-
 //Appliquer les relations (associations)
 Utilisateur.hasOne(Role)
 Role.hasMany(Utilisateur)

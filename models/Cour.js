@@ -6,12 +6,7 @@ import database from "../connexion.js"
 
 //Creation du  modele cours
 
-export const Cour = database.define(`Cours`,{
-    cours_id: { 
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        primaryKey: true
-    },
+export const Cours = database.define(`Cours`,{
     nom_du_cours:{
         type: DataTypes.STRING, 
         allowNull:false
