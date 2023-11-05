@@ -3,10 +3,10 @@ import{Role} from "../models/index.js"
 export const ajouterRole = async(req,res)=>{
 
     const{categorie} = req.body 
-    const Role = {categorie} 
+    const role = {categorie} 
 
     try{
-        await Role.create(Role)
+        await Role.create(role)
         res.status(201).json({message:"Le role a été ajouté avec succès"})
     }catch(error){
         res.status(400).json({message:"Problème avec la création du role"})
