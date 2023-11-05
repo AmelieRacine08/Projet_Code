@@ -1,5 +1,5 @@
 // Amener les types de donnees
-import { DataTypes } from 'sequelize';
+import { DataTypes } from "sequelize"
 
 //Amener la connexion a la base de donnees
 import database from "../connexion.js"
@@ -22,4 +22,6 @@ const Cour = database.define(`Cours`,{
 })
 
 export default Cour
+
+
 
