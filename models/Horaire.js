@@ -1,12 +1,12 @@
 // Amener les types de donnees
-import { DataTypes } from "sequelize";
+import { DataTypes } from 'sequelize';
 
 //Amener la connexion a la base de donnees
 import database from "../connexion.js"
 
 //Creation du  modele horaire
 
-export const Horaire = database.define(`Horaire`,{
+const Horaire = database.define(`Horaire`,{
     jour_de_semaine:{
         type: DataTypes.STRING, 
         allowNull:false
@@ -20,3 +20,5 @@ export const Horaire = database.define(`Horaire`,{
         allowNull:false
     }
 })
+
+export default Horaire

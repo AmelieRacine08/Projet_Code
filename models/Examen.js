@@ -1,12 +1,12 @@
 // Amener les types de donnees
-import { DataTypes } from "sequelize";
+import { DataTypes } from 'sequelize';
 
 //Amener la connexion a la base de donnees
 import database from "../connexion.js"
 
 //Creation du  modele examen
 
-export const Examen = database.define(`Examen`,{
+const Examen = database.define(`Examen`,{
     matiere:{
         type: DataTypes.STRING, 
         allowNull:false
@@ -28,3 +28,5 @@ export const Examen = database.define(`Examen`,{
         allowNull:false
     }
 })
+
+export default Examen

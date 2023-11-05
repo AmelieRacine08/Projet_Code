@@ -1,12 +1,12 @@
 // Amener les types de donnees
-import { DataTypes } from "sequelize";
+import { DataTypes } from 'sequelize'
 
 //Amener la connexion a la base de donnees
 import database from "../connexion.js"
 
 //Creation du  modele utilisateur
 
-export const Utilisateur = database.define(`Utilisateur`,{
+const Utilisateur = database.define(`Utilisateur`,{
     nom:{
         type: DataTypes.STRING, 
         allowNull:false
@@ -36,3 +36,5 @@ export const Utilisateur = database.define(`Utilisateur`,{
         allowNull:false
     }
 })
+
+export {Utilisateur}

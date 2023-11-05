@@ -1,12 +1,12 @@
 // Amener les types de donnees
-import { DataTypes } from "sequelize";
+import { DataTypes } from 'sequelize';
 
 //Amener la connexion a la base de donnees
 import database from "../connexion.js"
 
 //Creation du  modele programme
 
-export const Programme = database.define(`Programme`,{
+const Programme = database.define(`Programme`,{
     nom_du_programme:{
         type: DataTypes.STRING, 
         allowNull:false
@@ -20,3 +20,5 @@ export const Programme = database.define(`Programme`,{
         allowNull: false
     }
 })
+
+export default Programme

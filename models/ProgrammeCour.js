@@ -4,22 +4,17 @@ import { DataTypes } from 'sequelize';
 //Amener la connexion a la base de donnees
 import database from "../connexion.js"
 
-//Creation du  modele cours
+//Creation du  modele programmeCours
 
-const Cour = database.define(`Cours`,{
-    nom_du_cours:{
-        type: DataTypes.STRING, 
+const ProgrammeCour = database.define(`ProgrammeCours`,{
+    programme_id:{
+        type: DataTypes.INTEGER, 
         allowNull:false
     },
-    salle_du_cours:{
-        type: DataTypes.STRING, 
-        allowNull:false
-    },
-    credits:{
+    cour_id:{
         type: DataTypes.INTEGER, 
         allowNull:false
     }
 })
 
-export default Cour
-
+export default ProgrammeCour
