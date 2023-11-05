@@ -1,4 +1,5 @@
 // Amener les types de donnees
+
 import { DataTypes } from 'sequelize';
 
 //Amener la connexion a la base de donnees
