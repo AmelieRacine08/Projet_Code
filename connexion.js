@@ -1,6 +1,7 @@
 //Connexion a la base de donnee (connexion.js)
-import { Sequelize } from "sequelize";
+import {Sequelize} from 'sequelize'
 import dotenv from 'dotenv'
+
 
 const ENV = dotenv.config().parsed
 
