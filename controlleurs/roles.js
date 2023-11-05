@@ -2,8 +2,8 @@ import{Role} from "../models/index.js"
 
 export const ajouterRole = async(req,res)=>{
 
-    const{role_id,categorie} = req.body 
-    const Role = {role_id,categorie} 
+    const{categorie} = req.body 
+    const Role = {categorie} 
 
     try{
         await Role.create(Role)

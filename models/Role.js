@@ -6,7 +6,7 @@ import database from "../connexion.js"
 
 //Creation du  modele role
 
-const Role = database.define(`Rôle`,{
+const Role = database.define(`Role`,{
     categorie:{
         type: DataTypes.STRING, 
         allowNull:false
