@@ -5,10 +5,24 @@ import {ajouterRole, listeRole, RoleParId, supprimerRole, updateRole} from "../c
 
 const routesRole = Router()
 
-routesRole.get('/', listeRole)
-    .get('/:id', RoleParId)
-    .post ('/', ajouterRole)
-    .put('/:id', updateRole)
-    .delete('/:id', supprimerRole)
+routesRole.get('/', (req, res) => {
+    // Récupérez les paramètres de la requête (query params)
+  const page = parseInt(req.query.page)
+  const limite = parseInt(req.query.limite)
 
-    export default routesRole
+  // Calculez l'indice de début et fin pour la pagination
+  const indiceDebut = (page - 1) * limite;
+  const indiceFin = page * limite
+
+  // Appelez la fonction listeUtilisateur avec la pagination
+  const roles = listeRole.slice(indiceDebut, indiceFin);
+
+  res.json(roles);
+});
+
+routesRole.get('/:id', RoleParId)
+routesRole.post ('/', ajouterRole)
+routesRole.put('/:id', updateRole)
+routesRole.delete('/:id', supprimerRole)
+
+export default routesRole

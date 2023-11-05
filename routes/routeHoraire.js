@@ -5,10 +5,24 @@ import {ajouterHoraire, listeHoraire, HoraireParId, supprimerHoraire,updateHorai
 
 const routesHoraire = Router()
 
-routesHoraire.get('/', listeHoraire)
-    .get('/:id', HoraireParId)
-    .post ('/', ajouterHoraire)
-    .put('/:id', updateHoraire)
-    .delete('/:id', supprimerHoraire)
+routesHoraire.get('/', (req, res) => {
+    // Récupérez les paramètres de la requête (query params)
+  const page = parseInt(req.query.page)
+  const limite = parseInt(req.query.limite)
 
-    export default routesHoraire
+  // Calculez l'indice de début et fin pour la pagination
+  const indiceDebut = (page - 1) * limite;
+  const indiceFin = page * limite
+
+  // Appelez la fonction listeUtilisateur avec la pagination
+  const horaires = listeHoraire.slice(indiceDebut, indiceFin);
+
+  res.json(horaires);
+});
+
+routesHoraire.get('/:id', HoraireParId)
+routesHoraire.post ('/', ajouterHoraire)
+routesHoraire.put('/:id', updateHoraire)
+routesHoraire.delete('/:id', supprimerHoraire)
+
+export default routesHoraire
