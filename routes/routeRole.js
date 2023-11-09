@@ -12,20 +12,7 @@ const ajouterRoleValidation = [body("categorie").notEmpty().withMessage("La cate
 //Validation pour la route updateRole
 const updateRoleValidation = [body("categorie").notEmpty().withMessage("La categorie est requise")]
 
-routesRole.get('/', (req, res) => {
-    // Récupérez les paramètres de la requête (query params)
-  const page = parseInt(req.query.page)
-  const limite = parseInt(req.query.limite)
-
-  // Calculez l'indice de début et fin pour la pagination
-  const indiceDebut = (page - 1) * limite;
-  const indiceFin = page * limite
-
-  // Appelez la fonction listeUtilisateur avec la pagination
-  const roles = listeRole.slice(indiceDebut, indiceFin);
-
-  res.json(roles);
-});
+routesRole.get('/', listeRole);
 
 routesRole.get('/:id', RoleParId)
 routesRole.post ('/', ajouterRoleValidation ,ajouterRole)//Appliquer la validation a la route

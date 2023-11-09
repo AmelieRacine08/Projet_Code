@@ -8,7 +8,7 @@ import dotenv from 'dotenv'
 import database from "./connexion.js"
 
 import { ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from './controlleurs/utilisateurs.js'
-import { ajouterRole, listeRole, RoleParId, supprimerRole, updateRole } from './controlleurs/roles.js'
+
 import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, updateProgramme } from './controlleurs/programmes.js'
 import { ajouterHoraire, listeHoraire, HoraireParId, supprimerHoraire,updateHoraire } from './controlleurs/horaires.js'
 import { ajouterExamen, listeExamen, ExamenParId, supprimerExamen,updateExamen } from './controlleurs/examens.js'
@@ -44,11 +44,7 @@ app.put('/utilisateurs/:id', updateUtilisateur)
 app.delete('/utilisateurs/:id', supprimerUtilisateur)
 app.get('/utilisateurs/:id', UtilisateurParId)
 
-app.get('/roles', listeRole)
-app.post('/roles', ajouterRole)
-app.put('/roles/:id', updateRole)
-app.delete('/roles/:id', supprimerRole)
-app.get('/roles/:id', RoleParId)
+app.use('/roles', routesRole)
 
 app.get('/programmes', listeProgramme)
 app.post('/programmes', ajouterProgramme)

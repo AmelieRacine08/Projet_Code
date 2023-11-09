@@ -3,7 +3,7 @@ import { validationResult } from "express-validator"
 
 export const ajouterRole = async (req, res) => {
 
-    const role = { categorie: req.body.categorie }
+    const role = {categorie: req.body.categorie }
 
     const erreurs = validationResult(req);
     if (!erreurs.isEmpty()) {
@@ -20,14 +20,15 @@ export const ajouterRole = async (req, res) => {
 }
 
 
-export const listeRole = async (req, res) => {
-    // Retourner la liste complete des roles
-    const resultat = Role.findAll()
-    try {
-        res.status(200).json({ data: resultat })
+export const listeRole= async(req,res)=>{
+    try{
+        // Retourner la liste complete des roles
+        const resultat = await Role.findAll()
+        console.log("role", resultat)
+        res.status(200).json({data:resultat})
     }
-    catch (erreur) {
-        res.status(404).json({ erreur: erreur.message })
+    catch(erreur){
+        res.status(404).json({erreur:erreur.message})
     }
 }
 
@@ -37,7 +38,7 @@ export const RoleParId = async (req, res) => {
     console.log(id)
     try {
         const role = await Role.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
-        res.status(200).json({ data: role })
+        res.status(200).json({categorie: role })
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
