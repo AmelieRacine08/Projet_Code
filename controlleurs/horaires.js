@@ -90,3 +90,11 @@ export const updateHoraire = async(req,res)=>{
         res.status(400).json({message:"Problème avec la mise a jour de l'horaire"})
     }
 }
+
+// Definenir la fonction EstTempsValide 
+export function EstTempsValide(time) {
+    // Format "HH:MM" 
+    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+  
+    return timeRegex.test(time);
+  }

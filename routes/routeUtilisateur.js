@@ -4,6 +4,7 @@ import {Router} from "express"
 import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
 import { verifierToken } from "../auth/autorisation.js"
 import { body } from "express-validator"
+import { estDateValide } from "../controlleurs/examens.js"
 
 const routesUtilisateur = Router()
 
@@ -13,7 +14,14 @@ const ajouterUtilisateurValidation = [
   body("prenom").notEmpty().withMessage("Le prenom est requis"),
   body("email").notEmpty().withMessage("L'email est requis"),
   body("motDePasse").notEmpty().withMessage("Le mot de passe est requis"),
-  body("dateDeNaissance").notEmpty().withMessage("La date de naissance est requise")
+  body("dateDeNaissance")
+  .notEmpty().withMessage("La date de naissance est requise")
+  .custom((value)=>{
+    if(!estDateValide(value)){
+      throw new Error("La date d'examen n'est pas valide")
+    }
+    return true;
+  })
 ];
 
 //Validation pour la route updateUtilisateur
@@ -22,8 +30,14 @@ const updateUtilisateurValidation = [
   body("prenom").notEmpty().withMessage("Le prenom est requis"),
   body("email").notEmpty().withMessage("L'email est requis"),
   body("motDePasse").notEmpty().withMessage("Le mot de passe est requis"),
-  body("dateDeNaissance").notEmpty().withMessage("La date de naissance est requise")
-];
+  body("dateDeNaissance")
+  .notEmpty().withMessage("La date de naissance est requise")
+  .custom((value)=>{
+    if(!estDateValide(value)){
+      throw new Error("La date d'examen n'est pas valide")
+    }
+    return true;
+  })];
 
 routesUtilisateur.get('/', verifierToken, (req, res) => {
     // Récupérez les paramètres de la requête (query params)
