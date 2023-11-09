@@ -2,8 +2,21 @@
 
 import {Router} from "express"
 import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, updateProgramme } from "../controlleurs/programmes.js"
+import { body } from "express-validator";
 
 const routesProgramme = Router()
+
+const ajouterProgrammeValidation = [
+  body("nom_du_programme").notEmpty().withMessage("Le nom du programme est requis"),
+  body("date_de_debut").notEmpty().withMessage("La date de début du programme est requise"),
+  body("date_de_fin").notEmpty().withMessage("La date de fin du programme est requise")
+]
+
+const updateProgrammeValidation = [
+  body("nom_du_programme").notEmpty().withMessage("Le nom du programme est requis"),
+  body("date_de_debut").notEmpty().withMessage("La date de début du programme est requise"),
+  body("date_de_fin").notEmpty().withMessage("La date de fin du programme est requise")
+]
 
 routesProgramme.get('/', (req, res) => {
     // Récupérez les paramètres de la requête (query params)
@@ -21,8 +34,8 @@ routesProgramme.get('/', (req, res) => {
 });
 
 routesProgramme.get('/:id', ProgrammeParId)
-routesProgramme.post ('/', ajouterProgramme)
-routesProgramme.put('/:id', updateProgramme)
+routesProgramme.post ('/', ajouterProgrammeValidation ,ajouterProgramme)
+routesProgramme.put('/:id', updateProgrammeValidation ,updateProgramme)
 routesProgramme.delete('/:id', supprimerProgramme)
 
 export default routesProgramme

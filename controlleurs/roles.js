@@ -1,16 +1,22 @@
 import{Role} from "../models/index.js"
+import { validationResult } from "express-validator"
 
 export const ajouterRole = async(req,res)=>{
 
-    const{categorie} = req.body 
-    const role = {categorie} 
+    const role = {categorie: req.body.categorie}
 
-    try{
-        await Role.create(role)
-        res.status(201).json({message:"Le role a été ajouté avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la création du role"})
-    }
+    const erreurs = validationResult(req);
+    if(!erreurs.isEmpty()){
+        res.status(400).json({ erreurs: erreurs.array()})
+    }else{
+
+        try{
+            await Role.create(role)
+            res.status(201).json({message:"Le role a été ajouté avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la création du role"})
+        }
+    } 
 }
 
 export const listeRole= async(req,res)=>{
@@ -40,7 +46,7 @@ export const supprimerRole = async(req,res)=>{
 
     const id = req.params.id
     if(!parseInt(id)){
-        return  res.status(200).json({message:"Vous devez entrer un entier ici"})
+        return  res.status(400).json({message:"Vous devez entrer un entier ici"})
     }
     try{
 
@@ -56,10 +62,18 @@ export const updateRole = async(req,res)=>{
 
     const {id} = req.params
     const nouveauRole = req.body
-    try{
-        await Role.update(nouveauRole,{where:{id}})
-        res.status(201).json({message:"Le role a été mis à jour avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la mise a jour du role"})
+    const erreurs = validationResult(req);
+    if(!erreurs.isEmpty()){
+        res.status(400).json({erreurs: erreurs.array()})
+    }else{
+
+        try{
+            await Role.update(nouveauRole,{where:{id}})
+            res.status(201).json({message:"Le role a été mis à jour avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la mise a jour du role"})
+        }
     }
+    
 }
+

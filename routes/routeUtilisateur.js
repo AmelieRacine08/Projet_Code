@@ -3,8 +3,27 @@
 import {Router} from "express"
 import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
 import { verifierToken } from "../auth/autorisation.js"
+import { body } from "express-validator"
 
 const routesUtilisateur = Router()
+
+//Validation pour la route ajouterUtilisateur
+const ajouterUtilisateurValidation = [
+  body("nom").notEmpty().withMessage("Le nom est requis"),
+  body("prenom").notEmpty().withMessage("Le prenom est requis"),
+  body("email").notEmpty().withMessage("L'email est requis"),
+  body("motDePasse").notEmpty().withMessage("Le mot de passe est requis"),
+  body("dateDeNaissance").notEmpty().withMessage("La date de naissance est requise")
+];
+
+//Validation pour la route updateUtilisateur
+const updateUtilisateurValidation = [
+  body("nom").notEmpty().withMessage("Le nom est requis"),
+  body("prenom").notEmpty().withMessage("Le prenom est requis"),
+  body("email").notEmpty().withMessage("L'email est requis"),
+  body("motDePasse").notEmpty().withMessage("Le mot de passe est requis"),
+  body("dateDeNaissance").notEmpty().withMessage("La date de naissance est requise")
+];
 
 routesUtilisateur.get('/', verifierToken, (req, res) => {
     // Récupérez les paramètres de la requête (query params)
@@ -23,8 +42,8 @@ routesUtilisateur.get('/', verifierToken, (req, res) => {
 
 
 routesUtilisateur.get('/:id', UtilisateurParId)
-routesUtilisateur.post ('/', ajouterUtilisateur)
-routesUtilisateur.put('/:id', updateUtilisateur)
+routesUtilisateur.post ('/', ajouterUtilisateurValidation ,ajouterUtilisateur)
+routesUtilisateur.put('/:id', updateUtilisateurValidation , updateUtilisateur)
 routesUtilisateur.delete('/:id', supprimerUtilisateur)
 
 export default routesUtilisateur

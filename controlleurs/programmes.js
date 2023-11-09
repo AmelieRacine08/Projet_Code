@@ -1,16 +1,23 @@
 import { Programme } from "../models/index.js";
+import { validationResult } from "express-validator";
 
 export const ajouterProgramme = async(req,res)=>{
+     
+    const programme = {programme_id: req.body.programme_id, nom_du_programme: req.body.nom_du_programme, date_de_début: req.body.date_de_début, date_de_fin: req.body.date_de_fin} 
+    const erreurs = validationResult(req)
 
-    const{programme_id,nom_du_programme,date_de_début,date_de_fin} = req.body 
-    const programme = {programme_id,nom_du_programme,date_de_début,date_de_fin} 
+    if(!erreurs.isEmpty()){
+        res.status(400).json({erreurs: erreurs.array()})
 
-    try{
-        await Programme.create(programme)
-        res.status(201).json({message:"Le programme a été ajouté avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la création du programme"})
-    }
+    }else{
+
+        try{
+            await Programme.create(programme)
+            res.status(201).json({message:"Le programme a été ajouté avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la création du programme"})
+        }
+    }    
 }
 
 export const listeProgramme= async(req,res)=>{
@@ -56,10 +63,19 @@ export const updateProgramme = async(req,res)=>{
 
     const {id} = req.params
     const nouveauProgramme = req.body
-    try{
-        await Programme.update(nouveauProgramme,{where:{id}})
-        res.status(201).json({message:"Le programme a été mis à jour avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la mise a jour du programme"})
+    const erreurs = validationResult(req)
+    if(!erreurs.isEmpty()){
+
+        res.status(400).json({erreurs: erreurs.array()})
+
+    }else{
+
+        try{
+            await Programme.update(nouveauProgramme,{where:{id}})
+            res.status(201).json({message:"Le programme a été mis à jour avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la mise a jour du programme"})
+        }
     }
+    
 }

@@ -1,4 +1,5 @@
 import { Utilisateur } from "../models/index.js"
+import { validationResult } from "express-validator"
 
 //Importer le module de hashage
 import bcrypt from "bcryptjs"
@@ -10,14 +11,20 @@ export const ajouterUtilisateur = async(req,res)=>{
     const{nom,prenom,email,motDePasse,dateDeNaissance} = req.body 
     //Hasher le mot de passe
     const mdpCrypt = bcrypt.hashSync(motDePasse,10)
+    const utilisateur = {nom,prenom,email,motDePasse:mdpCrypt,dateDeNaissance}
+    const erreurs = validationResult(req);
 
-    const utilisateur = {nom,prenom,email,motDePasse:mdpCrypt,dateDeNaissance} 
+    if(!erreurs.isEmpty()){
 
-    try{
-        await Utilisateur.create(utilisateur)
-        res.status(201).json({message:"L'utilisateur a été ajouté avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la création de l'utilisateur"})
+        res.status(400).json({erreurs: erreurs.array()})
+    }else{
+
+        try{
+            await Utilisateur.create(utilisateur)
+            res.status(201).json({message:"L'utilisateur a été ajouté avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la création de l'utilisateur"})
+        }
     }
 }
 
@@ -64,10 +71,19 @@ export const updateUtilisateur = async(req,res)=>{
 
     const {id} = req.params
     const nouvelleUtilisateur = req.body
-    try{
-        await Utilisateur.update(nouvelleUtilisateur,{where:{id}})
-        res.status(201).json({message:"L'utilisateur a été mise a jour avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la mise a jour de l'utilisateur"})
+    const erreurs = validationResult(req);
+
+    if(!erreurs.isEmpty()){
+
+        res.status(400).json({erreurs: erreurs.array()})
+    }else{
+
+        try{
+            await Utilisateur.update(nouvelleUtilisateur,{where:{id}})
+            res.status(201).json({message:"L'utilisateur a été mise a jour avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la mise a jour de l'utilisateur"})
+        }
     }
+    
 }

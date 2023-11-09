@@ -1,3 +1,4 @@
+import { validationResult } from "express-validator";
 import { Examen } from "../models/index.js";
 
 export const ajouterExamen = async(req,res)=>{
@@ -56,6 +57,20 @@ export const updateExamen = async(req,res)=>{
 
     const {id} = req.params
     const nouvelleExamen = req.body
+
+    const erreurs = validationResult(req);
+
+    if(!erreurs.isEmpty()){
+
+        res.status(400).json({erreurs: erreurs.array()})
+    }else{
+        try{
+            await Examen.update(nouvelleExamen,{where:{id}})
+            res.status(201).json({message:"L'examen a été mis à jour avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la mise a jour de l'examen"})
+        }
+    }
     try{
         await Examen.update(nouvelleExamen,{where:{id}})
         res.status(201).json({message:"L'examen a été mis à jour avec succès"})
@@ -63,3 +78,17 @@ export const updateExamen = async(req,res)=>{
         res.status(400).json({message:"Problème avec la mise a jour de l'examen"})
     }
 }
+
+// Definenir la fonction estDateValide 
+export function estDateValide(date) {
+    // Regarder si la date est valide
+    return date instanceof Date && !isNaN(date);
+  }
+  
+  // Definenir la fonction EstTempsValide 
+export function EstTempsValide(time) {
+    // Format "HH:MM" 
+    const timeRegex = /^([01]\d|2[0-3]):([0-5]\d)$/;
+  
+    return timeRegex.test(time);
+  }

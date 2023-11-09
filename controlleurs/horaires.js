@@ -1,16 +1,29 @@
 import { Horaire } from "../models/index.js";
+import { validationResult } from "express-validator";
 
 export const ajouterHoraire = async(req,res)=>{
 
-    const{horaire_id,jour_de_semaine,horaire_de_debut,horaire_de_fin} = req.body 
-    const horaire = {horaire_id,jour_de_semaine,horaire_de_debut,horaire_de_fin} 
+     
+    const horaire = {horaire_id: req.body.horaire, jour_de_semaine: req.body.jour_de_semaine,
+        horaire_de_debut: req.body.horaire_de_debut, horaire_de_fin: req.body.horaire_de_fin} 
 
-    try{
-        await Horaire.create(horaire)
-        res.status(201).json({message:"L'horaire a été ajouté avec succès"})
-    }catch(error){
-        res.status(400).json({message:"Problème avec la création de l'horaire"})
-    }
+    const erreurs = validationResult(req);
+
+        if(!erreurs.isEmpty()){
+
+            res.status(400).json({erreurs: erreurs.array()})
+
+        }else{
+
+            try{
+                await Horaire.create(horaire)
+                res.status(201).json({message:"L'horaire a été ajouté avec succès"})
+            }catch(error){
+                res.status(400).json({message:"Problème avec la création de l'horaire"})
+            }
+        }
+
+    
 }
 
 export const listeHoraire= async(req,res)=>{
@@ -56,6 +69,20 @@ export const updateHoraire = async(req,res)=>{
 
     const {id} = req.params
     const nouvelleHoraire = req.body
+
+    const erreurs = validationResult(req);
+
+    if(!erreurs.isEmpty()){
+
+        res.status(400).json({erreurs: erreurs.array()})
+    }else{
+        try{
+            await Horaire.update(nouvelleHoraire,{where:{id}})
+            res.status(201).json({message:"L'horaire a été mis à jour avec succès"})
+        }catch(error){
+            res.status(400).json({message:"Problème avec la mise a jour de l'horaire"})
+        }  
+    }
     try{
         await Horaire.update(nouvelleHoraire,{where:{id}})
         res.status(201).json({message:"L'horaire a été mis à jour avec succès"})
