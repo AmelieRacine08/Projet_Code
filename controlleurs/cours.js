@@ -17,7 +17,7 @@ export const ajouterCour = async(req,res)=>{
 export const listeCour= async(req,res)=>{
     try{
         // Retourner la liste complete des cours
-        const resultat = Cour.findAll()
+        const resultat = await Cour.findAll()
         res.status(200).json({data:resultat})
     }
     catch(erreur){

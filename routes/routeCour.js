@@ -22,20 +22,7 @@ const updateCourValidation = [
     .isInt({ min: 0, max: 100 }).withMessage("Les crédits doivent être un nombre entre 0 et 100")
 ];
 
-routesCour.get('/', (req, res) => {
-    // Récupérez les paramètres de la requête (query params)
-  const page = parseInt(req.query.page)
-  const limite = parseInt(req.query.limite)
-
-  // Calculez l'indice de début et fin pour la pagination
-  const indiceDebut = (page - 1) * limite;
-  const indiceFin = page * limite
-
-  // Appelez la fonction listeUtilisateur avec la pagination
-  const cour = listeCour.slice(indiceDebut, indiceFin);
-
-  res.json(cour);
-});
+routesCour.get('/', listeCour);
 
 routesCour.get('/:id', CourParId)
 routesCour.post ('/', ajouterCourValidation ,ajouterCour)

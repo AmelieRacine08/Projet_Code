@@ -36,7 +36,7 @@ export const ajouterUtilisateur = async(req,res)=>{
 export const listeUtilisateur= async(req,res)=>{
     try{
         // Retourner la liste complete des utilisateurs
-        const resultat = Utilisateur.findAll()
+        const resultat = await Utilisateur.findAll()
         res.status(200).json({data:resultat})
     }
     catch(erreur){

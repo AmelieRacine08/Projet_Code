@@ -64,20 +64,7 @@ body("horaire_de_fin")
   body("salle_examen").notEmpty().withMessage("La salle d'examen est requise")
 ]
 
-routesExamen.get('/', (req, res) => {
-    // Récupérez les paramètres de la requête (query params)
-  const page = parseInt(req.query.page)
-  const limite = parseInt(req.query.limite)
-
-  // Calculez l'indice de début et fin pour la pagination
-  const indiceDebut = (page - 1) * limite;
-  const indiceFin = page * limite
-
-  // Appelez la fonction listeUtilisateur avec la pagination
-  const examens = listeExamen.slice(indiceDebut, indiceFin);
-
-  res.json(examens);
-});
+routesExamen.get('/', listeExamen);
 
 routesExamen.get('/:id', ExamenParId)
 routesExamen.post ('/', ajouterExamenValidation ,ajouterExamen)

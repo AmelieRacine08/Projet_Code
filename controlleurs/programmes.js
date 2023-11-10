@@ -23,7 +23,7 @@ export const ajouterProgramme = async(req,res)=>{
 export const listeProgramme= async(req,res)=>{
     try{
         // Retourner la liste complete des programmes
-        const resultat = Programme.findAll()
+        const resultat = await Programme.findAll()
         res.status(200).json({data:resultat})
     }
     catch(erreur){

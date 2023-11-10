@@ -44,20 +44,7 @@ body("date_de_fin")
     return true;
   })]
 
-routesProgramme.get('/', (req, res) => {
-    // Récupérez les paramètres de la requête (query params)
-  const page = parseInt(req.query.page)
-  const limite = parseInt(req.query.limite)
-
-  // Calculez l'indice de début et fin pour la pagination
-  const indiceDebut = (page - 1) * limite;
-  const indiceFin = page * limite
-
-  // Appelez la fonction listeUtilisateur avec la pagination
-  const programmes = listeProgramme.slice(indiceDebut, indiceFin);
-
-  res.json(programmes);
-});
+routesProgramme.get('/', listeProgramme);
 
 routesProgramme.get('/:id', ProgrammeParId)
 routesProgramme.post ('/', ajouterProgrammeValidation ,ajouterProgramme)

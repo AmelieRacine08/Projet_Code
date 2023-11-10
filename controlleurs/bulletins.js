@@ -16,7 +16,7 @@ export const ajouterBulletin = async(req,res)=>{
 export const listeBulletin= async(req,res)=>{
     try{
         // Retourner la liste complete des bulletins
-        const resultat = Bulletin.findAll()
+        const resultat = await Bulletin.findAll()
         res.status(200).json({data:resultat})
     }
     catch(erreur){

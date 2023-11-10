@@ -17,7 +17,7 @@ export const ajouterExamen = async(req,res)=>{
 export const listeExamen= async(req,res)=>{
     try{
         // Retourner la liste complete des bulletins
-        const resultat = Examen.findAll()
+        const resultat = await Examen.findAll()
         res.status(200).json({data:resultat})
     }
     catch(erreur){

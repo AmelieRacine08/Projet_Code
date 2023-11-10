@@ -7,14 +7,6 @@ import compression from 'compression'
 import dotenv from 'dotenv'
 import database from "./connexion.js"
 
-import { ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from './controlleurs/utilisateurs.js'
-
-import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, updateProgramme } from './controlleurs/programmes.js'
-import { ajouterHoraire, listeHoraire, HoraireParId, supprimerHoraire,updateHoraire } from './controlleurs/horaires.js'
-import { ajouterExamen, listeExamen, ExamenParId, supprimerExamen,updateExamen } from './controlleurs/examens.js'
-import { ajouterCour, listeCour, CourParId, supprimerCour,updateCour } from './controlleurs/cours.js'
-import { ajouterBulletin, listeBulletin, BulletinParId, supprimerBulletin,updateBulletin } from './controlleurs/bulletins.js'
-
 import routesUtilisteur from './routes/routeUtilisateur.js'
 import routesRole from './routes/routeRole.js'
 import routesProgramme from './routes/routeProgramme.js'
@@ -37,45 +29,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.get('/salutation',(req,res)=>{
     res.send('Bonjour!')
 })
-
-app.get('/utilisateurs', listeUtilisateur)
-app.post('/utilisateurs', ajouterUtilisateur)
-app.put('/utilisateurs/:id', updateUtilisateur)
-app.delete('/utilisateurs/:id', supprimerUtilisateur)
-app.get('/utilisateurs/:id', UtilisateurParId)
-
-app.use('/roles', routesRole)
-
-app.get('/programmes', listeProgramme)
-app.post('/programmes', ajouterProgramme)
-app.put('/programmes/:id', updateProgramme)
-app.delete('/programmes/:id', supprimerProgramme)
-app.get('/programmes/:id', ProgrammeParId)
-
-app.get('/horaires', listeHoraire)
-app.post('/horaires', ajouterHoraire)
-app.put('/horaires/:id', updateHoraire)
-app.delete('/horaires/:id', supprimerHoraire)
-app.get('/horaires/:id', HoraireParId)
-
-app.get('/examens', listeExamen)
-app.post('/examens', ajouterExamen)
-app.put('/examens/:id', updateExamen)
-app.delete('/examens/:id', supprimerExamen)
-app.get('/examens/:id', ExamenParId)
-
-app.get('/cours', listeCour)
-app.post('/cours', ajouterCour)
-app.put('/cours/:id', updateCour)
-app.delete('/cours/:id', supprimerCour)
-app.get('/cours/:id', CourParId)
-
-app.get('/bulletins', listeBulletin)
-app.post('/bulletins', ajouterBulletin)
-app.put('/bulletins/:id', updateBulletin)
-app.delete('/bulletins/:id', supprimerBulletin)
-app.get('/bulletins/:id', BulletinParId)
-
 
 //Utilisation des routes
 

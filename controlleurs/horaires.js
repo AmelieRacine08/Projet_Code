@@ -29,7 +29,7 @@ export const ajouterHoraire = async(req,res)=>{
 export const listeHoraire= async(req,res)=>{
     try{
         // Retourner la liste complete des bulletins
-        const resultat = Horaire.findAll()
+        const resultat = await Horaire.findAll()
         res.status(200).json({data:resultat})
     }
     catch(erreur){

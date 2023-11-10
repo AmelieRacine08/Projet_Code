@@ -40,20 +40,7 @@ const updateHoraireValidation = [
   ]
 
 
-routesHoraire.get('/', (req, res) => {
-    // Récupérez les paramètres de la requête (query params)
-  const page = parseInt(req.query.page)
-  const limite = parseInt(req.query.limite)
-
-  // Calculez l'indice de début et fin pour la pagination
-  const indiceDebut = (page - 1) * limite;
-  const indiceFin = page * limite
-
-  // Appelez la fonction listeUtilisateur avec la pagination
-  const horaires = listeHoraire.slice(indiceDebut, indiceFin);
-
-  res.json(horaires);
-});
+routesHoraire.get('/', listeHoraire);
 
 routesHoraire.get('/:id', HoraireParId)
 routesHoraire.post ('/', ajouterHoraireValidation ,ajouterHoraire)
