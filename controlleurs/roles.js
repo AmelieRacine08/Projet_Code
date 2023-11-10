@@ -25,7 +25,7 @@ export const listeRole= async(req,res)=>{
         // Retourner la liste complete des roles
         const resultat = await Role.findAll()
         console.log("role", resultat)
-        res.status(200).json({data:resultat})
+        res.status(200).json({Roles:resultat})
     }
     catch(erreur){
         res.status(404).json({erreur:erreur.message})

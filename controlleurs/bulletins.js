@@ -16,8 +16,10 @@ export const ajouterBulletin = async(req,res)=>{
 export const listeBulletin= async(req,res)=>{
     try{
         // Retourner la liste complete des bulletins
+
         const resultat = await Bulletin.findAll()
-        res.status(200).json({data:resultat})
+        res.status(200).json({Moyenne:resultat})
+
     }
     catch(erreur){
         res.status(404).json({erreur:erreur.message})
@@ -30,7 +32,7 @@ export const BulletinParId = async(req,res)=>{
     console.log(id)
     try{
         const bulletin = await Bulletin.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
-        res.status(200).json({data:bulletin})
+        res.status(200).json({Bulletins:bulletin})
     }catch(error){
         res.status(404).json({message:error.message})
     }

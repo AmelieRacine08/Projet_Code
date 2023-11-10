@@ -5,15 +5,14 @@ import { validationResult } from "express-validator"
 import bcrypt from "bcryptjs"
 
 
-
 export const ajouterUtilisateur = async(req,res)=>{
 
-    const { nom, prenom, email, motPasse, dateDeNaissance } = req.body
+    const { nom, prenom, email, motPasse, dateDeNaissance, BulletinId, ProgrammeId, RoleId } = req.body
     console.log("Mot de passe",motPasse)
     //Hacher le mot de passe
     const mdpCrypte=bcrypt.hashSync(motPasse,10)
     
-    const utilisateur = {nom,prenom,email,motPasse:mdpCrypte,dateDeNaissance, BulletinId: null, ProgrammeId:null, RoleId:null}
+    const utilisateur = {nom,prenom,email,motPasse:mdpCrypte, dateDeNaissance, BulletinId, ProgrammeId, RoleId}
     console.log("Utilisateur",utilisateur)
     
     const erreurs = validationResult(req);
