@@ -79,3 +79,8 @@ export const updateProgramme = async(req,res)=>{
     }
     
 }
+
+export function estDateValide(date) {
+    // Regarder si la date est valide
+    return date instanceof Date && !isNaN(date);    
+}

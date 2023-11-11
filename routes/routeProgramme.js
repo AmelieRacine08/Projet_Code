@@ -1,7 +1,7 @@
 // fonction permettant de creer des routes
 
 import {Router} from "express"
-import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, updateProgramme } from "../controlleurs/programmes.js"
+import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, updateProgramme, estDateValide } from "../controlleurs/programmes.js"
 import { body } from "express-validator";
 
 const routesProgramme = Router()
@@ -11,7 +11,7 @@ const ajouterProgrammeValidation = [
   body("date_de_debut")
   .notEmpty().withMessage("La date de début du programme est requise")
   .custom((value) => {
-    if (!EstTempsValide(value)) {
+    if (!estDateValide(value)) {
       throw new Error("La date de début du programme n'est pas valide");
     }
     return true;
@@ -19,7 +19,7 @@ const ajouterProgrammeValidation = [
 body("date_de_fin")
   .notEmpty().withMessage("La date de fin du programme est requise")
   .custom((value) => {
-    if (!EstTempsValide(value)) {
+    if (!estDateValide(value)) {
       throw new Error("La date de fin du programme n'est pas valide");
     }
     return true;
@@ -30,7 +30,7 @@ const updateProgrammeValidation = [
   body("date_de_debut")
   .notEmpty().withMessage("La date de début du programme est requise")
   .custom((value) => {
-    if (!EstTempsValide(value)) {
+    if (!estDateValide(value)) {
       throw new Error("La date de début du programme n'est pas valide");
     }
     return true;
@@ -38,14 +38,14 @@ const updateProgrammeValidation = [
 body("date_de_fin")
   .notEmpty().withMessage("La date de fin du programme est requise")
   .custom((value) => {
-    if (!EstTempsValide(value)) {
-      throw new Error("La date de fin du programme n'est pas valide");
+    if (!estDateValide(value)) {
+      console.log("*******date",value)
+      throw new Error("La date de fin du programme n'est pas valide");      
     }
     return true;
   })]
 
 routesProgramme.get('/', listeProgramme);
-
 routesProgramme.get('/:id', ProgrammeParId)
 routesProgramme.post ('/', ajouterProgrammeValidation ,ajouterProgramme)
 routesProgramme.put('/:id', updateProgrammeValidation ,updateProgramme)
