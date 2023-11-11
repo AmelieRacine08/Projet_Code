@@ -18,7 +18,13 @@ export const listeExamen = async (req, res) => {
     try {
         // Retourner la liste complete des bulletins
         const resultat = await Examen.findAll()
-        res.status(200).json({ data: resultat })
+
+        if(resultat.length === 0){
+            res.status(404).json({erreur: "Aucun examen trouvé"})
+        }
+        else{
+            res.status(200).json({ data: resultat })
+        }        
     }
     catch (erreur) {
         res.status(404).json({ erreur: erreur.message })
@@ -28,10 +34,19 @@ export const listeExamen = async (req, res) => {
 export const ExamenParId = async (req, res) => {
 
     const id = req.params.id
-    console.log(id)
+
+    if(!parseInt(id)){
+        return  res.status(200).json({message:"Erreur ! Vous devez entrer un ID"})
+    }
     try {
         const examen = await Examen.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
-        res.status(200).json({ data: examen })
+
+        if(examen){
+            res.status(200).json({ data: examen })
+        }
+        else{
+            res.status(404).json({ erreur: "Aucun examen trouvé avec l'ID entré." })
+        }
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -45,8 +60,13 @@ export const supprimerExamen = async (req, res) => {
     }
     try {
 
-        await Examen.destroy({ where: { id } })
-        res.status(200).json({ message: "L'examen' a été supprimé avec succès" })
+        const resultatSuppression = await Examen.destroy({ where: { id } })
+        if(resultatSuppression === 0){
+            res.status(404).json({ message: "Aucun examen trouvé avec l'ID entré" })
+        }
+        else{
+            res.status(200).json({ message: "L'examen' a été supprimé avec succès" })
+        }
 
     } catch (error) {
         res.status(400).json({ message: "Erreur avec la suppression de l'examen" })

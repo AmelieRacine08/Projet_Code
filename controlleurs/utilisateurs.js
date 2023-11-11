@@ -8,7 +8,7 @@ import bcrypt from "bcryptjs"
 export const ajouterUtilisateur = async(req,res)=>{
 
     const { nom, prenom, email, motPasse, dateDeNaissance, BulletinId, ProgrammeId, RoleId } = req.body
-    console.log("Mot de passe",motPasse)
+    console.log("Mot de passe",motPasse) // Nous devons afficher le mot de passe?******************************************8
     //Hacher le mot de passe
     const mdpCrypte=bcrypt.hashSync(motPasse,10)
     
@@ -23,7 +23,6 @@ export const ajouterUtilisateur = async(req,res)=>{
     }else{
 
         try{
-           console.log("On est la")
             await Utilisateur.create(utilisateur)
             res.status(201).json({message:"L'utilisateur a été ajouté avec succès"})
         }catch(error){
@@ -36,7 +35,14 @@ export const listeUtilisateur= async(req,res)=>{
     try{
         // Retourner la liste complete des utilisateurs
         const resultat = await Utilisateur.findAll()
-        res.status(200).json({data:resultat})
+
+        if(resultat.length === 0){
+            res.status(404).json({ erreur: "Aucun utilisateur trouvé." });
+            
+        }
+        else {
+            res.status(200).json({data:resultat})
+        }        
     }
     catch(erreur){
         res.status(404).json({erreur:erreur.message})
@@ -46,10 +52,20 @@ export const listeUtilisateur= async(req,res)=>{
 export const UtilisateurParId = async(req,res)=>{
 
     const id = req.params.id
-    console.log("notre id",id)
+
+    if(!parseInt(id)){
+        return  res.status(200).json({message:"Erreur ! Vous devez entrer un ID"})
+    }
+    
     try{
         const utilisateur = await Utilisateur.findByPk(id) // utiliser findByPk puisqu'on chercher pour l'ID
-        res.status(200).json({data:utilisateur})
+        
+        if(utilisateur){
+            res.status(200).json({data:utilisateur})
+        }
+        else{
+            res.status(404).json({ erreur:"Aucun utilisateur trouvé avec l'ID entré."})
+        }
     }catch(error){
         res.status(404).json({message:error.message})
     }
@@ -62,9 +78,14 @@ export const supprimerUtilisateur = async(req,res)=>{
         return  res.status(200).json({message:"Erreur ! Vous devez entrer un entier ici"})
     }
     try{
+        const resultatSuppression = await Utilisateur.destroy({where:{id}})
 
-        await Utilisateur.destroy({where:{id}})
-        res.status(200).json({message:"L'utilisateur a été supprimé avec succès"})
+        if(resultatSuppression === 0){
+            res.status(404).json({ message: "Aucun utilisateur trouvé avec l'ID entré." });
+        }
+        else{
+            res.status(200).json({message:"L'utilisateur a été supprimé avec succès"})
+        }
 
     }catch(error){
         res.status(400).json({message:"Problème avec la suppression de l'utilisateur"})

@@ -24,7 +24,13 @@ export const listeProgramme= async(req,res)=>{
     try{
         // Retourner la liste complete des programmes
         const resultat = await Programme.findAll()
-        res.status(200).json({data:resultat})
+
+        if(resultat.length === 0){
+            res.status(404).json({erreur:"Aucun programme trouvé."})
+        }
+        else{
+            res.status(200).json({data:resultat})
+        }        
     }
     catch(erreur){
         res.status(404).json({erreur:erreur.message})
@@ -34,10 +40,21 @@ export const listeProgramme= async(req,res)=>{
 export const ProgrammeParId = async(req,res)=>{
 
     const id = req.params.id
-    console.log(id)
+
+    if(!parseInt(id)){
+        return  res.status(200).json({message:"Erreur ! Vous devez entrer un ID"})
+    }
+
     try{
         const programme = await Programme.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
-        res.status(200).json({data:programme})
+        
+        if(programme){
+            res.status(200).json({data:programme})
+        }
+        else{
+            res.status(404).json({erreur:"Aucun programme trouvé avec l'ID entré."})
+        }
+        
     }catch(error){
         res.status(404).json({message:error.message})
     }
@@ -51,8 +68,15 @@ export const supprimerProgramme = async(req,res)=>{
     }
     try{
 
-        await Programme.destroy({where:{id}})
-        res.status(200).json({message:"Le programme a été supprimé avec succès"})
+        const resultatSuppression = await Programme.destroy({where:{id}})
+
+        if(resultatSuppression === 0){
+            res.status(404).json({message:"Aucun programme trouvé avec l'ID entré"})
+
+        }
+        else{
+            res.status(200).json({message:"Le programme a été supprimé avec succès"})
+        }
 
     }catch(error){
         res.status(400).json({message:"Erreur avec la suppression du programme"})

@@ -16,10 +16,14 @@ export const ajouterBulletin = async(req,res)=>{
 export const listeBulletin= async(req,res)=>{
     try{
         // Retourner la liste complete des bulletins
-
         const resultat = await Bulletin.findAll()
-        res.status(200).json({Moyenne:resultat})
 
+        if(resultat.length === 0){
+            res.status(404).json({erreur:"Aucun bulletin trouvé."})
+        }
+        else{
+            res.status(200).json({Moyenne:resultat})
+        }      
     }
     catch(erreur){
         res.status(404).json({erreur:erreur.message})
@@ -29,10 +33,20 @@ export const listeBulletin= async(req,res)=>{
 export const BulletinParId = async(req,res)=>{
 
     const id = req.params.id
-    console.log(id)
+
+    if(!parseInt(id)){
+        return  res.status(200).json({message:"Erreur ! Vous devez entrer un ID"})
+    }
+
     try{
         const bulletin = await Bulletin.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
-        res.status(200).json({Bulletins:bulletin})
+
+        if(bulletin){
+            res.status(200).json({Bulletins:bulletin})
+        }
+        else{
+            res.status(404).json({erreur:"Aucun bulletin trouvé avec l'ID entré."})
+        } 
     }catch(error){
         res.status(404).json({message:error.message})
     }
@@ -46,8 +60,13 @@ export const supprimerBulletin = async(req,res)=>{
     }
     try{
 
-        await Bulletin.destroy({where:{id}})
-        res.status(200).json({message:"Le bulletin a été supprimé avec succès"})
+        const resultatSuppression = await Bulletin.destroy({where:{id}})
+        if(resultatSuppression === 0){
+            res.status(404).json({message:"Aucun bulletin trouvé avec l'ID entré."})
+        }
+        else{
+            res.status(200).json({message:"Le bulletin a été supprimé avec succès"})
+        }
 
     }catch(error){
         res.status(400).json({message:"Erreur avec la suppression du bulletin"})

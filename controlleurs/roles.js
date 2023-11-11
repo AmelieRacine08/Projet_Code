@@ -24,8 +24,13 @@ export const listeRole= async(req,res)=>{
     try{
         // Retourner la liste complete des roles
         const resultat = await Role.findAll()
-        console.log("role", resultat)
-        res.status(200).json({Roles:resultat})
+        
+        if(resultat.length === 0){
+            res.status(404).json({erreur: "Aucun role trouvé."}) 
+        }
+        else{
+            res.status(200).json({Roles:resultat})
+        }        
     }
     catch(erreur){
         res.status(404).json({erreur:erreur.message})
@@ -35,10 +40,19 @@ export const listeRole= async(req,res)=>{
 export const RoleParId = async (req, res) => {
 
     const id = req.params.id
-    console.log(id)
+
+    if(!parseInt(id)){
+        return  res.status(200).json({message:"Erreur ! Vous devez entrer un ID"})
+    }
     try {
         const role = await Role.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
-        res.status(200).json({categorie: role })
+        
+        if(role){
+            res.status(200).json({categorie: role })
+        }
+        else{
+            res.status(404).json({erreur: "Aucun role trouvé avec l'ID entré."})
+        }        
     } catch (error) {
         res.status(404).json({ message: error.message })
     }
@@ -52,8 +66,14 @@ export const supprimerRole = async (req, res) => {
     }
     try {
 
-        await Role.destroy({ where: { id } })
-        res.status(200).json({ message: "Le role a été supprimé avec succès" })
+        const resultatSuppression = await Role.destroy({ where: { id } })
+
+        if(resultatSuppression === 0){
+            res.status(404).json({ message: "Aucun role trouvé avec l'ID entré." })
+        }
+        else{
+            res.status(200).json({ message: "Le role a été supprimé avec succès" })
+        }
 
     } catch (error) {
         res.status(400).json({ message: "Erreur avec la suppression du role" })

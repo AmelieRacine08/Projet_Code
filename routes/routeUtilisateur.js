@@ -13,12 +13,10 @@ const ajouterUtilisateurValidation = [
   body("nom").notEmpty().withMessage("Le nom est requis"),
   body("prenom").notEmpty().withMessage("Le prenom est requis"),
   body("email").notEmpty().withMessage("L'email est requis"),
-  body("motDePasse").notEmpty().withMessage("Le mot de passe est requis"),
-  body("dateDeNaissance")
-  .notEmpty().withMessage("La date de naissance est requise")
-  .custom((value)=>{
+  body("motPasse").notEmpty().withMessage("Le mot de passe est requis"),
+  body("dateNaissance").notEmpty().withMessage("La date de naissance est requise").custom((value) => {
     if(!estDateValide(value)){
-      throw new Error("La date d'examen n'est pas valide")
+      throw new Error("La date de naissance n'est pas valide")
     }
     return true;
   })
@@ -29,15 +27,14 @@ const updateUtilisateurValidation = [
   body("nom").notEmpty().withMessage("Le nom est requis"),
   body("prenom").notEmpty().withMessage("Le prenom est requis"),
   body("email").notEmpty().withMessage("L'email est requis"),
-  body("motDePasse").notEmpty().withMessage("Le mot de passe est requis"),
-  body("dateDeNaissance")
-  .notEmpty().withMessage("La date de naissance est requise")
-  .custom((value)=>{
+  body("motPasse").notEmpty().withMessage("Le mot de passe est requis"),
+  body("dateNaissance").notEmpty().withMessage("La date de naissance est requise").custom((value) => {
     if(!estDateValide(value)){
-      throw new Error("La date d'examen n'est pas valide")
+      throw new Error("La date de naissance n'est pas valide")
     }
     return true;
-  })];
+  })
+];
 
 routesUtilisateur.get('/', listeUtilisateur);
 
