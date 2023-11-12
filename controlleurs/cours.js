@@ -23,7 +23,7 @@ export const listeCour= async(req,res)=>{
             res.status(404).json({erreur:"Aucun cours trouvé"})
         }
         else{
-            res.status(200).json({data:resultat})
+            res.status(200).json({Cours:resultat})
         }        
     }
     catch(erreur){
@@ -42,7 +42,7 @@ export const CourParId = async(req,res)=>{
     try{
         const cour = await Cour.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
         if(cour){
-            res.status(200).json({data:cour})
+            res.status(200).json({Cour:cour})
         }
         else{
             res.status(404).json({erreur:"Aucun cours trouvé avec l'ID entré."})

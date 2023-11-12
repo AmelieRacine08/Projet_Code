@@ -3,12 +3,16 @@ import { validationResult } from "express-validator";
 
 export const ajouterProgramme = async(req,res)=>{
      
-    const programme = {programme_id: req.body.programme_id, nom_du_programme: req.body.nom_du_programme, date_de_début: req.body.date_de_début, date_de_fin: req.body.date_de_fin} 
+    const programme = {
+        programme_id: req.body.programme_id,
+        nom_du_programme: req.body.nom_du_programme,
+        date_de_début: new Date(req.body.date_de_début),
+        date_de_fin: new Date (req.body.date_de_fin)
+    } 
     const erreurs = validationResult(req)
 
     if(!erreurs.isEmpty()){
         res.status(400).json({erreurs: erreurs.array()})
-
     }else{
 
         try{
@@ -29,7 +33,7 @@ export const listeProgramme= async(req,res)=>{
             res.status(404).json({erreur:"Aucun programme trouvé."})
         }
         else{
-            res.status(200).json({data:resultat})
+            res.status(200).json({Programmes:resultat})
         }        
     }
     catch(erreur){
@@ -49,7 +53,7 @@ export const ProgrammeParId = async(req,res)=>{
         const programme = await Programme.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
         
         if(programme){
-            res.status(200).json({data:programme})
+            res.status(200).json({Programme:programme})
         }
         else{
             res.status(404).json({erreur:"Aucun programme trouvé avec l'ID entré."})

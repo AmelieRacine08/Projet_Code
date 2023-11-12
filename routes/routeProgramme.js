@@ -38,8 +38,7 @@ const updateProgrammeValidation = [
 body("date_de_fin")
   .notEmpty().withMessage("La date de fin du programme est requise")
   .custom((value) => {
-    if (!estDateValide(value)) {
-      console.log("*******date",value)
+    if (!estDateValide(value)) {      
       throw new Error("La date de fin du programme n'est pas valide");      
     }
     return true;

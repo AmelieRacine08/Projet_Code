@@ -23,7 +23,7 @@ export const listeExamen = async (req, res) => {
             res.status(404).json({erreur: "Aucun examen trouvé"})
         }
         else{
-            res.status(200).json({ data: resultat })
+            res.status(200).json({ Examens: resultat })
         }        
     }
     catch (erreur) {
@@ -42,7 +42,7 @@ export const ExamenParId = async (req, res) => {
         const examen = await Examen.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
 
         if(examen){
-            res.status(200).json({ data: examen })
+            res.status(200).json({ Examen: examen })
         }
         else{
             res.status(404).json({ erreur: "Aucun examen trouvé avec l'ID entré." })
@@ -81,6 +81,37 @@ export const updateExamen = async (req, res) => {
     const erreurs = validationResult(req);
 
     if (!erreurs.isEmpty()) {
+
+/**  pas capable de updateExamen
+ * {
+    "erreurs": [
+        {
+            "type": "field",
+            "value": "2022-11-14",
+            "msg": "La date d'examen n'est pas valide",
+            "path": "date_examen",
+            "location": "body"
+        },
+        {
+            "type": "field",
+            "value": "18:41:36",
+            "msg": "L'horaire de début n'est pas valide",
+            "path": "horaire_de_debut",
+            "location": "body"
+        },
+        {
+            "type": "field",
+            "value": "19:12:47",
+            "msg": "L'horaire de fin n'est pas valide",
+            "path": "horaire_de_fin",
+            "location": "body"
+        }
+    ]
+}
+ * 
+ * 
+ */
+
 
         res.status(400).json({ erreurs: erreurs.array() })
     } else {

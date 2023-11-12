@@ -22,7 +22,7 @@ export const listeBulletin= async(req,res)=>{
             res.status(404).json({erreur:"Aucun bulletin trouvé."})
         }
         else{
-            res.status(200).json({Moyenne:resultat})
+            res.status(200).json({Bulletins:resultat})
         }      
     }
     catch(erreur){
@@ -42,7 +42,7 @@ export const BulletinParId = async(req,res)=>{
         const bulletin = await Bulletin.findByPk(id) // utiliser findByPk puisqu'on cherche pour l'ID
 
         if(bulletin){
-            res.status(200).json({Bulletins:bulletin})
+            res.status(200).json({Bulletin:bulletin})
         }
         else{
             res.status(404).json({erreur:"Aucun bulletin trouvé avec l'ID entré."})
