@@ -3,8 +3,12 @@ import { Examen } from "../models/index.js";
 
 export const ajouterExamen = async (req, res) => {
 
-    const { examen_id, matiere, date_examen, horaire_de_fin, salle_examen } = req.body
-    const examen = { examen_id, matiere, date_examen, horaire_de_fin, salle_examen }
+    const { matiere, date_examen, horaire_de_debut, horaire_de_fin, salle_examen } = req.body // Ajusté conforme les autres controlleurs
+
+    const examen = { matiere, date_examen, horaire_de_debut, horaire_de_fin, salle_examen }
+    console.log("examen", examen)
+
+    // Examen ajoute car il n'a pas de Validation Result(req) ni condition if (!erreurs.isEmpty())
 
     try {
         await Examen.create(examen)
@@ -132,8 +136,9 @@ export const updateExamen = async (req, res) => {
 
 // Definenir la fonction estDateValide 
 export function estDateValide(date) {
-    // Regarder si la date est valide
-    return date instanceof Date && !isNaN(date);
+    // Verifier si la date est valide - format "YYYY-MM-DD"
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(date)
 }
 
 // Definenir la fonction EstTempsValide 

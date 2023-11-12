@@ -3,11 +3,9 @@ import { validationResult } from "express-validator";
 
 export const ajouterHoraire = async (req, res) => {
 
-
-    const horaire = {
-        horaire_id: req.body.horaire, jour_de_semaine: req.body.jour_de_semaine,
-        horaire_de_debut: req.body.horaire_de_debut, horaire_de_fin: req.body.horaire_de_fin
-    }
+    const {jour_de_semaine, horaire_de_debut, horaire_de_fin} = req.body
+    const horaire = { jour_de_semaine, horaire_de_debut, horaire_de_fin }
+    console.log("horaire", horaire)
 
     const erreurs = validationResult(req);
 
@@ -18,14 +16,14 @@ export const ajouterHoraire = async (req, res) => {
     {
         "type": "field",
         "value": "04:09:47",
-        "msg": "L'horaire de début n'est pas valide.",
+        "msg": "L'horaire de début n'est pas valide.", => maintenant InvalidValue
         "path": "horaire_de_debut",
         "location": "body"
     },
     {
         "type": "field",
         "value": "08:41:36",
-        "msg": "L'horaire de fin n'est pas valide.",
+        "msg": "L'horaire de fin n'est pas valide.", => maintenant InvalidValue
         "path": "horaire_de_fin",
         "location": "body"
     }

@@ -1,10 +1,9 @@
 // fonction permettant de creer des routes
 
 import {Router} from "express"
-import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
+import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur, estDateValide } from "../controlleurs/utilisateurs.js"
 import { verifierToken } from "../auth/autorisation.js"
 import { body } from "express-validator"
-import { estDateValide } from "../controlleurs/examens.js"
 
 const routesUtilisateur = Router()
 

@@ -7,36 +7,18 @@ import bcrypt from "bcryptjs"
 
 export const ajouterUtilisateur = async(req,res)=>{
 
-    const { nom, prenom, email, motPasse, dateDeNaissance,/* BulletinId, ProgrammeId, RoleId */} = req.body
+    const { nom, prenom, email, motPasse, dateNaissance, numeroTelephone/*, BulletinId, ProgrammeId, RoleId */} = req.body
 
     //Hacher le mot de passe
     const mdpCrypte=bcrypt.hashSync(motPasse,10)
     
-    const utilisateur = {nom,prenom,email,motPasse:mdpCrypte, dateDeNaissance/*, BulletinId, ProgrammeId, RoleId*/}
+    const utilisateur = {nom,prenom,email,motPasse:mdpCrypte, dateNaissance, numeroTelephone/*, BulletinId, ProgrammeId, RoleId*/}
     console.log("Utilisateur",utilisateur)
     
     const erreurs = validationResult(req);
 
     if(!erreurs.isEmpty()){
-    console.log("On est la avec l'erreur",erreurs) // L'erreur est ici On est la avec l'erreur Result {
-      /*  formatter: [Function: formatter],
-        errors: [
-          {
-            type: 'field',
-            value: undefined,
-            msg: 'Le mot de passe est requis',
-            path: 'motDePasse',
-            location: 'body'
-          },
-          {
-            type: 'field',
-            value: '1997-03-08',
-            msg: "La date d'examen n'est pas valide",
-            path: 'dateDeNaissance',
-            location: 'body'
-          }
-        ]
-      }*/
+    console.log("On est la avec l'erreur",erreurs) 
         res.status(400).json({erreurs: erreurs.array()})
 
     }else{
@@ -118,31 +100,6 @@ export const updateUtilisateur = async(req,res)=>{
     const erreurs = validationResult(req);
 
     if(!erreurs.isEmpty()){
-
-        /* erreur recu lors de l'updateUtilisateur
-        {
-    "erreurs": [
-        {
-            "type": "field",
-            "msg": "Le mot de passe est requis",
-            "path": "motDePasse",
-            "location": "body"
-        },
-        {
-            "type": "field",
-            "msg": "La date de naissance est requise",
-            "path": "dateDeNaissance",
-            "location": "body"
-        },
-        {
-            "type": "field",
-            "msg": "La date d'examen n'est pas valide",
-            "path": "dateDeNaissance",
-            "location": "body"
-        }
-    ]
-}
-        */
         res.status(400).json({erreurs: erreurs.array()})
     }else{
 
@@ -154,4 +111,10 @@ export const updateUtilisateur = async(req,res)=>{
         }
     }
     
+}
+
+export function estDateValide(date) {
+    // Verifier si la date est valide - format "YYYY-MM-DD"
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(date)
 }

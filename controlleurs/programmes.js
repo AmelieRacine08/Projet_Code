@@ -3,12 +3,11 @@ import { validationResult } from "express-validator";
 
 export const ajouterProgramme = async(req,res)=>{
      
-    const programme = {
-        programme_id: req.body.programme_id,
-        nom_du_programme: req.body.nom_du_programme,
-        date_de_début: new Date(req.body.date_de_début),
-        date_de_fin: new Date (req.body.date_de_fin)
-    } 
+    const {nom_du_programme, date_de_debut, date_de_fin } = req.body
+
+    const programme = {nom_du_programme, date_de_debut, date_de_fin }
+    console.log("programme", programme)
+
     const erreurs = validationResult(req)
 
     if(!erreurs.isEmpty()){
@@ -104,11 +103,11 @@ export const updateProgramme = async(req,res)=>{
         }catch(error){
             res.status(400).json({message:"Problème avec la mise a jour du programme"})
         }
-    }
-    
+    }    
 }
 
 export function estDateValide(date) {
-    // Regarder si la date est valide
-    return date instanceof Date && !isNaN(date);    
+    // Verifier si la date est valide - format "YYYY-MM-DD"
+    const dateRegex = /^\d{4}-\d{2}-\d{2}$/;
+    return dateRegex.test(date)
 }
