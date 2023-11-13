@@ -5,112 +5,112 @@ import { validationResult } from "express-validator"
 import bcrypt from "bcryptjs"
 
 
-export const ajouterUtilisateur = async(req,res)=>{
+export const ajouterUtilisateur = async (req, res) => {
 
-    const { nom, prenom, email, motPasse, dateNaissance, numeroTelephone/*, BulletinId, ProgrammeId, RoleId */} = req.body
+    const { nom, prenom, email, motPasse, dateNaissance, numeroTelephone} = req.body
 
     //Hacher le mot de passe
-    const mdpCrypte=bcrypt.hashSync(motPasse,10)
-    
-    const utilisateur = {nom,prenom,email,motPasse:mdpCrypte, dateNaissance, numeroTelephone/*, BulletinId, ProgrammeId, RoleId*/}
-    console.log("Utilisateur",utilisateur)
-    
+    const mdpCrypte = bcrypt.hashSync(motPasse, 10)
+
+    const utilisateur = { nom, prenom, email, motPasse: mdpCrypte, dateNaissance, numeroTelephone}    
+
     const erreurs = validationResult(req);
 
-    if(!erreurs.isEmpty()){
-    console.log("On est la avec l'erreur",erreurs) 
-        res.status(400).json({erreurs: erreurs.array()})
+    if (!erreurs.isEmpty()) {
+        
+        res.status(400).json({ erreurs: erreurs.array() })
 
-    }else{
+    } else {
 
-        try{
+        try {
             await Utilisateur.create(utilisateur)
-            res.status(201).json({message:"L'utilisateur a été ajouté avec succès"})
-        }catch(error){
-            res.status(400).json({message:"Problème avec la création de l'utilisateur"})
+            res.status(201).json({ message: "L'utilisateur a été ajouté avec succès" })
+        } catch (error) {
+            res.status(400).json({ message: "Problème avec la création de l'utilisateur" })
         }
     }
 }
 
-export const listeUtilisateur= async(req,res)=>{
-    try{
+export const listeUtilisateur = async (req, res) => {
+    try {
         // Retourner la liste complete des utilisateurs
         const resultat = await Utilisateur.findAll()
 
-        if(resultat.length === 0){
+        if (resultat.length === 0) {
             res.status(404).json({ erreur: "Aucun utilisateur trouvé." });
-            
+
         }
         else {
-            res.status(200).json({Utilisateurs:resultat})
-        }        
+            res.status(200).json({ Utilisateurs: resultat })
+        }
     }
-    catch(erreur){
-        res.status(404).json({erreur:erreur.message})
+    catch (erreur) {
+         res.status(404).json({erreur:erreur.message})
     }
 }
 
-export const UtilisateurParId = async(req,res)=>{
+export const UtilisateurParId = async (req, res) => {
 
     const id = req.params.id
 
-    if(!parseInt(id)){
-        return  res.status(200).json({message:"Erreur ! Vous devez entrer un ID"})
+    if (!parseInt(id)) {
+        return res.status(200).json({ message: "Erreur ! Vous devez entrer un ID" })
     }
-    
-    try{
+
+    try {
         const utilisateur = await Utilisateur.findByPk(id) // utiliser findByPk puisqu'on chercher pour l'ID
-        
-        if(utilisateur){
-            res.status(200).json({Utilisateur:utilisateur})
+
+        if (utilisateur) {
+            res.status(200).json({ Utilisateur: utilisateur })
         }
-        else{
-            res.status(404).json({ erreur:"Aucun utilisateur trouvé avec l'ID entré."})
+        else {
+            res.status(404).json({ erreur: "Aucun utilisateur trouvé avec l'ID entré." })
         }
-    }catch(error){
-        res.status(404).json({message:error.message})
+    } catch (error) {
+        res.status(404).json({ message: error.message })
     }
 }
 
-export const supprimerUtilisateur = async(req,res)=>{
+export const supprimerUtilisateur = async (req, res) => {
 
     const id = req.params.id
-    if(!parseInt(id)){
-        return  res.status(200).json({message:"Erreur ! Vous devez entrer un entier ici"})
+    if (!parseInt(id)) {
+        return res.status(200).json({ message: "Erreur ! Vous devez entrer un entier ici" })
     }
-    try{
-        const resultatSuppression = await Utilisateur.destroy({where:{id}})
+    try {
+        const resultatSuppression = await Utilisateur.destroy({ where: { id } })
 
-        if(resultatSuppression === 0){
+        if (resultatSuppression === 0) {
             res.status(404).json({ message: "Aucun utilisateur trouvé avec l'ID entré." });
         }
-        else{
-            res.status(200).json({message:"L'utilisateur a été supprimé avec succès"})
+        else {
+            res.status(200).json({ message: "L'utilisateur a été supprimé avec succès" })
         }
 
-    }catch(error){
-        res.status(400).json({message:"Problème avec la suppression de l'utilisateur"})
+    } catch (error) {
+        res.status(400).json({ message: "Problème avec la suppression de l'utilisateur" })
     }
 }
 
-export const updateUtilisateur = async(req,res)=>{
-
-    const {id} = req.params
+export const updateUtilisateur = async (req, res) => {
+    const { id } = req.params
     const nouvelleUtilisateur = req.body
     const erreurs = validationResult(req);
 
-    if(!erreurs.isEmpty()){
-        res.status(400).json({erreurs: erreurs.array()})
-    }else{
-
-        try{
-            await Utilisateur.update(nouvelleUtilisateur,{where:{id}})
-            res.status(201).json({message:"L'utilisateur a été mise a jour avec succès"})
-        }catch(error){
-            res.status(400).json({message:"Problème avec la mise a jour de l'utilisateur"})
-        }
+    if (!erreurs.isEmpty()) {
+        res.status(400).json({ erreurs: erreurs.array() })
     }
-    
+    try {
+        const resultatUpdate = await Utilisateur.update(nouvelleUtilisateur, { where: { id } })
+
+        if (resultatUpdate[0] === 0) {
+            res.status(404).json({ message: "Aucun utilisateur trouvé avec l'ID fourni. La mise à jour n'a pas été effectuée." });
+        } else {
+            res.status(201).json({ message: "L'utilisateur a été mis à jour avec succès" });
+        }
+    } catch (error) {
+        res.status(400).json({ message: "Problème avec la mise à jour de l'utilisateur" });
+    }
 }
 
 export function estDateValide(date) {

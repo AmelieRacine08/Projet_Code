@@ -78,8 +78,12 @@ export const updateBulletin = async(req,res)=>{
     const {id} = req.params
     const nouveauBulletin = req.body
     try{
-        await Bulletin.update(nouveauBulletin,{where:{id}})
-        res.status(201).json({message:"Le bulletin a été mis à jour avec succès"})
+        const resultatUpdate = await Bulletin.update(nouveauBulletin,{where:{id}})
+        if(resultatUpdate[0]===0){
+            res.status(404).json({ message: "Aucun bulletin trouvé avec l'ID fourni. La mise à jour n'a pas été effectuée." });
+        }else{
+            res.status(201).json({message:"Le bulletin a été mis à jour avec succès"})
+        }
     }catch(error){
         res.status(400).json({message:"Problème avec la mise a jour du bulletin"})
     }
