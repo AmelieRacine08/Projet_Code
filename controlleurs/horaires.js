@@ -6,11 +6,10 @@ export const ajouterHoraire = async (req, res) => {
     const { jour_de_semaine, horaire_de_debut, horaire_de_fin } = req.body
     const horaire = { jour_de_semaine, horaire_de_debut, horaire_de_fin }
 
-    const erreurs = validationResult(req);
+    const erreurs = validationResult(req.body);
 
-    if (!erreurs.isEmpty()) {
-        console.log("Quelle est l'erreur ??", erreurs)
-        return res.status(400).json({ erreurs: erreurs.array() })
+    if (!erreurs.isEmpty()) {        
+        res.status(400).json({ erreurs: erreurs.array() })
     }
     try {
         await Horaire.create(horaire)
