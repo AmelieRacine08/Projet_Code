@@ -42,7 +42,7 @@ export const isAdministrateur = async (req, res, next) => {
             const role = await user.getRole();
             console.log("Role ici", role)
 
-            // Check if the role exists before accessing its properties
+            // Verifier que le role existe avant de proceder
             if (role && role.categorie.toLowerCase() === 'administration') {
                 next();
             } else {
