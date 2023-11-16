@@ -21,6 +21,7 @@ Programme.hasMany(Utilisateur)
 Programme.belongsToMany(Cour, { through: 'ProgrammeCour'})
 Cour.belongsToMany(Programme, { through: 'ProgrammeCour'})
 
+// Revoir la relation entre ces tables
 Cour.hasMany(Examen)
 Examen.hasOne(Cour)
 
