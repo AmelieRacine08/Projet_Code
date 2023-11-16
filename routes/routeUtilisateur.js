@@ -1,45 +1,15 @@
 // fonction permettant de creer des routes
-
 import {Router} from "express"
-import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur, estDateValide } from "../controlleurs/utilisateurs.js"
+import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
 import { verifierToken } from "../auth/autorisation.js"
-import { body } from "express-validator"
 
 const routesUtilisateur = Router()
 
-//Validation pour la route ajouterUtilisateur
-const ajouterUtilisateurValidation = [
-  body("nom").notEmpty().withMessage("Le nom est requis"),
-  body("prenom").notEmpty().withMessage("Le prenom est requis"),
-  body("email").notEmpty().withMessage("L'email est requis"),
-  body("motPasse").notEmpty().withMessage("Le mot de passe est requis"),
-  body("dateNaissance").notEmpty().withMessage("La date de naissance est requise").custom((value) => {
-    if(!estDateValide(value)){
-      throw new Error("La date de naissance n'est pas valide")
-    }
-    return true;
-  })
-];
-
-//Validation pour la route updateUtilisateur
-const updateUtilisateurValidation = [
-  body("nom").notEmpty().withMessage("Le nom est requis"),
-  body("prenom").notEmpty().withMessage("Le prenom est requis"),
-  body("email").notEmpty().withMessage("L'email est requis"),
-  body("motPasse").notEmpty().withMessage("Le mot de passe est requis"),
-  body("dateNaissance").notEmpty().withMessage("La date de naissance est requise").custom((value) => {
-    if(!estDateValide(value)){
-      throw new Error("La date de naissance n'est pas valide")
-    }
-    return true;
-  })
-];
-
-routesUtilisateur.get('/', listeUtilisateur);
-
-routesUtilisateur.get('/:id', UtilisateurParId)
-routesUtilisateur.post ('/', ajouterUtilisateurValidation ,ajouterUtilisateur)
-routesUtilisateur.put('/:id', updateUtilisateurValidation , updateUtilisateur)
-routesUtilisateur.delete('/:id', supprimerUtilisateur)
+//Application de la validation et de la l'authentification
+routesUtilisateur.get('/',verifierToken, listeUtilisateur); //Seule ajouterUtilisateur n'aura pas besoin d'un token
+routesUtilisateur.get('/:id',verifierToken, UtilisateurParId)
+routesUtilisateur.post ('/', ajouterUtilisateurValidation, ajouterUtilisateur)
+routesUtilisateur.put('/:id', updateUtilisateurValidation, verifierToken, updateUtilisateur)
+routesUtilisateur.delete('/:id', verifierToken, supprimerUtilisateur)
 
 export default routesUtilisateur

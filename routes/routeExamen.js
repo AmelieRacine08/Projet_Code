@@ -1,74 +1,15 @@
 // fonction permettant de creer des routes
-
 import {Router} from "express"
-import {ajouterExamen, listeExamen, ExamenParId, supprimerExamen,updateExamen, estDateValide, EstTempsValide } from "../controlleurs/examens.js"
-import { body } from "express-validator";
+import {ajouterExamen, listeExamen, ExamenParId, supprimerExamen,updateExamen} from "../controlleurs/examens.js"
+import { verifierToken } from "../auth/autorisation.js";
 
 const routesExamen = Router()
 
-const ajouterExamenValidation = [
-  body("matiere").notEmpty().withMessage("Le nom de la matière est requise"),
-  body("date_examen")
-  .notEmpty().withMessage("La date d'examen est requise")
-  .custom((value) => {
-    if (!estDateValide(value)) {
-      throw new Error("La date d'examen n'est pas valide");
-    }
-    return true;
-  }),
-  body("horaire_de_debut")
-    .notEmpty().withMessage("L'horaire de début est requis")
-    .custom((value) => {
-      if (!EstTempsValide(value)) {
-        throw new Error("L'horaire de début n'est pas valide");
-      }
-      return true;
-    }),
-  body("horaire_de_fin")
-    .notEmpty().withMessage("L'horaire de fin est requis")
-    .custom((value) => {
-      if (!EstTempsValide(value)) {
-        throw new Error("L'horaire de fin n'est pas valide");
-      }
-      return true;
-    }),
-  body("salle_examen").notEmpty().withMessage("La salle d'examen est requise")
-]
-
-const updateExamenValidation = [
-  body("matiere").notEmpty().withMessage("Le nom de la matière est requise"),
-  body("date_examen")
-  .notEmpty().withMessage("La date d'examen est requise")
-  .custom((value) => {
-    if (!estDateValide(value)) {
-      throw new Error("La date d'examen n'est pas valide");
-    }
-    return true;
-  }),
-  body("horaire_de_debut")
-  .notEmpty().withMessage("L'horaire de début est requis")
-  .custom((value) => {
-    if (!EstTempsValide(value)) {
-      throw new Error("L'horaire de début n'est pas valide");
-    }
-    return true;
-  }),
-body("horaire_de_fin")
-  .notEmpty().withMessage("L'horaire de fin est requis")
-  .custom((value) => {
-    if (!EstTempsValide(value)) {
-      throw new Error("L'horaire de fin n'est pas valide");
-    }
-    return true;
-  }),
-  body("salle_examen").notEmpty().withMessage("La salle d'examen est requise")
-]
-
+//Application de la validation et de la l'authentification (seule listeExamen et ExamenParId n'on pas besoin d'authentification)
 routesExamen.get('/', listeExamen);
-
 routesExamen.get('/:id', ExamenParId)
-routesExamen.post ('/', ajouterExamenValidation ,ajouterExamen)
-routesExamen.put('/:id', updateExamenValidation ,updateExamen)
-routesExamen.delete('/:id', supprimerExamen)
+routesExamen.post ('/', ajouterExamenValidation, verifierToken, ajouterExamen)
+routesExamen.put('/:id', updateExamenValidation, verifierToken, updateExamen)
+routesExamen.delete('/:id', verifierToken, supprimerExamen)
 
 export default routesExamen

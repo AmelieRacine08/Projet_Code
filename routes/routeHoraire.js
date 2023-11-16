@@ -1,49 +1,15 @@
 // fonction permettant de creer des routes
-
 import {Router} from "express"
-import { ajouterHoraire, listeHoraire, HoraireParId, supprimerHoraire,updateHoraire, EstTempsValide } from "../controlleurs/horaires.js"
-import { body } from "express-validator";
+import { ajouterHoraire, listeHoraire, HoraireParId, supprimerHoraire,updateHoraire} from "../controlleurs/horaires.js"
+import { verifierToken } from "../auth/autorisation.js"
 
 const routesHoraire = Router()
 
-const ajouterHoraireValidation = [
-  body("jour_de_semaine").notEmpty().withMessage("Le jour de la semaine est requise"),
-  body("horaire_de_debut")
-  .notEmpty().withMessage("L'horaire de début est requise").custom((value)=>{
-    if(!EstTempsValide(value)){
-      throw new Error("L'horaire de début n'est pas valide.")
-    }
-  }),
-  body("horaire_de_fin")
-  .notEmpty().withMessage("L'horaire de fin est requise").custom((value)=>{
-    if(!EstTempsValide(value)){
-      throw new Error("L'horaire de fin n'est pas valide.")
-    }
-  }),
-  ]
-
-const updateHoraireValidation = [
-  body("jour_de_semaine").notEmpty().withMessage("Le jour de la semaine est requise"),
-  body("horaire_de_debut")
-  .notEmpty().withMessage("L'horaire de début est requise").custom((value)=>{
-    if(!EstTempsValide(value)){ //EstTempsValide
-      throw new Error("L'horaire de début n'est pas valide.")
-    }
-  }),
-  body("horaire_de_fin")
-  .notEmpty().withMessage("L'horaire de fin est requise").custom((value)=>{
-    if(!EstTempsValide(value)){
-      throw new Error("L'horaire de fin n'est pas valide.")
-    }
-  }),
-  ]
-
-
+//Application de la validation et de la l'authentification (seule listeHoraire et HoraireParId n'on pas besoin d'authentification)
 routesHoraire.get('/', listeHoraire);
-
 routesHoraire.get('/:id', HoraireParId)
-routesHoraire.post ('/', ajouterHoraireValidation ,ajouterHoraire)
-routesHoraire.put('/:id', updateHoraireValidation ,updateHoraire)
-routesHoraire.delete('/:id', supprimerHoraire)
+routesHoraire.post ('/', ajouterHoraireValidation, verifierToken, ajouterHoraire)
+routesHoraire.put('/:id', updateHoraireValidation, verifierToken, updateHoraire)
+routesHoraire.delete('/:id', verifierToken,supprimerHoraire)
 
 export default routesHoraire
