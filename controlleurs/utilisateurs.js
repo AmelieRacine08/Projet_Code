@@ -94,7 +94,10 @@ export const supprimerUtilisateur = async (req, res) => {
 
 export const updateUtilisateur = async (req, res) => {
     const { id } = req.params
-    const nouvelleUtilisateur = req.body
+    const { nom, prenom, email, motPasse, dateNaissance, numeroTelephone} = req.body
+    const mdpCrypte = bcrypt.hashSync(motPasse, 10)
+    const nouvelleUtilisateur = { nom, prenom, email, motPasse: mdpCrypte, dateNaissance, numeroTelephone}
+    
     const erreurs = validationResult(req);
 
     if (!erreurs.isEmpty()) {
@@ -104,12 +107,13 @@ export const updateUtilisateur = async (req, res) => {
         const resultatUpdate = await Utilisateur.update(nouvelleUtilisateur, { where: { id } })
 
         if (resultatUpdate[0] === 0) {
-            res.status(404).json({ message: "Aucun utilisateur trouvé avec l'ID fourni. La mise à jour n'a pas été effectuée." });
+           return res.status(404).json({ message: "Aucun utilisateur trouvé avec l'ID fourni. La mise à jour n'a pas été effectuée." });
         } else {
-            res.status(201).json({ message: "L'utilisateur a été mis à jour avec succès" });
+           return res.status(201).json({ message: "L'utilisateur a été mis à jour avec succès" });
         }
     } catch (error) {
-        res.status(400).json({ message: "Problème avec la mise à jour de l'utilisateur" });
+        return res.status(400).json({erreurs: message.erreur });
+       // message: "Problème avec la mise à jour de l'utilisateur"
     }
 }
 

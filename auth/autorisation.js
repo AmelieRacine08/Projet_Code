@@ -1,5 +1,6 @@
 //Importer jwt
 import  jwt  from "jsonwebtoken";
+import { Utilisateur } from "../models/index.js";
 
 export const verifierToken = (req,res,next)=>{
     //Recuperation du token
@@ -13,40 +14,43 @@ export const verifierToken = (req,res,next)=>{
 
    jwt.verify(token,process.env.CODE_SECRET,(err,payload)=>{
         if(err){
-            res.status(401).json({message: err.message})
-
-            req.userId = payload.userId
-
-            next()
+            return res.status(401).json({message: err.message})            
         }
+        if (payload) {
+            req.userId = payload.id;
+            next();
+        } else {
+            return res.status(401).json({ message: "Token malformé" });
+        }        
     })
 }
 
 export const isAdministrateur = async (req, res, next) => {
+    // Recuperer l'id a partir de la req
+    const id = req.userId;
 
-    //Recuperer l'id a partir de la req
-    const id = req.userId
-
-    //Chercher la personne dans la base de donnees
-
+    // Chercher la personne dans la base de donnees
     try {
-        const user = await Utilisateur.findByPk(id)
-        if (!user) return res.status(404).json({ message: "Cet utilisateur n'existe pas!" })
+        const user = await Utilisateur.findByPk(id);
 
-        //Recuperer le role de la personne 
-        // Mettre uj autre try catch 
-        const role = await user.getRole()
-
-        if (role.categorie.toLowerCase() == 'admin') {
-            next()
-            return
-        } else{
-            return res.status(403).json({ message: "Cette fonctionnalité n'est pas disponible pour votre compte" })
+        if (!user) {
+            return res.status(404).json({ message: "Cet utilisateur n'existe pas!" });
         }
 
+        // Recuperer le role de la personne
+        try {
+            const role = await user.getRole();
 
+            // Check if the role exists before accessing its properties
+            if (role && role.categorie.toLowerCase() === 'Administration') {
+                next();
+            } else {
+                return res.status(403).json({ message: "Cette fonctionnalité n'est pas disponible pour votre compte" });
+            }
+        } catch (roleError) {
+            return res.status(500).json({ message: "Erreur lors de la récupération du rôle de l'utilisateur", error: roleError.message });
+        }
     } catch (error) {
-        res.status(403).json({ message: error.message })
+        return res.status(500).json({ message: "Erreur lors de la recherche de l'utilisateur", error: error.message });
     }
-
-}
+};
