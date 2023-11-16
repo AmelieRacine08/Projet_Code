@@ -2,6 +2,7 @@
 import {Router} from "express"
 import {ajouterUtilisateur, listeUtilisateur, UtilisateurParId, supprimerUtilisateur,updateUtilisateur } from "../controlleurs/utilisateurs.js"
 import { verifierToken } from "../auth/autorisation.js"
+import {ajouterUtilisateurValidation, updateUtilisateurValidation} from "../validations/UtilisateurValidation.js"
 
 const routesUtilisateur = Router()
 

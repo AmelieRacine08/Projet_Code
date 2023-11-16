@@ -2,6 +2,7 @@
 import {Router} from "express"
 import {ajouterCour, listeCour, CourParId, supprimerCour,updateCour } from "../controlleurs/cours.js"
 import { verifierToken } from "../auth/autorisation.js";
+import {ajouterCourValidation, updateCourValidation} from "../validations/CourValidation.js"
 
 const routesCour = Router()
 

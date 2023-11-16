@@ -2,6 +2,7 @@
 import {Router} from "express"
 import { ajouterProgramme, listeProgramme, ProgrammeParId, supprimerProgramme, updateProgramme } from "../controlleurs/programmes.js"
 import { verifierToken } from "../auth/autorisation.js"
+import {ajouterProgrammeValidation, updateProgrammeValidation} from "../validations/ProgrammeValidation.js"
 
 
 const routesProgramme = Router()

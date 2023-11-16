@@ -2,6 +2,7 @@
 import {Router} from "express"
 import {ajouterBulletin, listeBulletin, BulletinParId, supprimerBulletin,updateBulletin } from "../controlleurs/bulletins.js"
 import { verifierToken } from "../auth/autorisation.js";
+import{ajouterBulletinValidation, updateBulletinValidation} from "../validations/BulletinValidation.js"
 
 const routesBulletin = Router()
 

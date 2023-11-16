@@ -1,6 +1,6 @@
 import { body } from "express-validator";
 
-export const ajouterCourValidation = [
+ const ajouterCourValidation = [
     body("nom_du_cours").notEmpty().withMessage("Le nom du cours est requis"),
     body("salle_du_cours").notEmpty().withMessage("La salle du cours est requise"),
     body("credits")
@@ -8,7 +8,7 @@ export const ajouterCourValidation = [
       .isInt({ min: 0, max: 100 }).withMessage("Les crédits doivent être un nombre entre 0 et 100")
   ];
   
-  export const updateCourValidation = [
+   const updateCourValidation = [
     body("nom_du_cours").notEmpty().withMessage("Le nom du cours est requis"),
     body("salle_du_cours").notEmpty().withMessage("La salle du cours est requise"),
     body("credits")
@@ -16,3 +16,4 @@ export const ajouterCourValidation = [
       .isInt({ min: 0, max: 100 }).withMessage("Les crédits doivent être un nombre entre 0 et 100")
   ];
   
+  export {ajouterCourValidation, updateCourValidation}

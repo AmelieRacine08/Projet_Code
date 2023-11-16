@@ -2,6 +2,7 @@
 import {Router} from "express"
 import {ajouterExamen, listeExamen, ExamenParId, supprimerExamen,updateExamen} from "../controlleurs/examens.js"
 import { verifierToken } from "../auth/autorisation.js";
+import {ajouterExamenValidation, updateExamenValidation} from "../validations/ExamenValidation.js"
 
 const routesExamen = Router()
 
