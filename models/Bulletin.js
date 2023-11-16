@@ -11,7 +11,8 @@ const Bulletin = database.define(`Bulletin`,{
     moyenne:{
         type: DataTypes.DECIMAL(5,2), 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default Bulletin

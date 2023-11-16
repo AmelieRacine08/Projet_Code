@@ -34,7 +34,8 @@ const Utilisateur = database.define(`Utilisateur`,{
     motPasse:{
         type: DataTypes.STRING, 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+)
 
 export {Utilisateur}

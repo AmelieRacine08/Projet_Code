@@ -26,7 +26,8 @@ const Examen = database.define(`Examen`,{
     salle_examen:{
         type: DataTypes.STRING, 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default Examen

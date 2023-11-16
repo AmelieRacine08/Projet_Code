@@ -10,7 +10,8 @@ const Role = database.define(`Role`,{
     categorie:{
         type: DataTypes.STRING, 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default Role

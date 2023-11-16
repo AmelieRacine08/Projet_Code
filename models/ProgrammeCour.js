@@ -14,7 +14,8 @@ const ProgrammeCour = database.define(`ProgrammeCours`,{
     cour_id:{
         type: DataTypes.INTEGER, 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default ProgrammeCour

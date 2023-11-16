@@ -18,7 +18,8 @@ const Horaire = database.define(`Horaire`,{
     horaire_de_fin:{
         type: DataTypes.TIME, 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default Horaire

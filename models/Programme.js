@@ -18,7 +18,8 @@ const Programme = database.define(`Programme`,{
     date_de_fin:{
         type: DataTypes.DATEONLY,
         allowNull: false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default Programme

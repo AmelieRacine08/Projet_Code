@@ -18,8 +18,9 @@ const Cour = database.define(`Cours`,{
     credits:{
         type: DataTypes.INTEGER, 
         allowNull:false
-    }
-})
+    }},
+    {timestamps: false}
+    )
 
 export default Cour
 

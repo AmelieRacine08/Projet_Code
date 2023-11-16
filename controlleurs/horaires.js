@@ -86,7 +86,7 @@ export const updateHoraire = async (req, res) => {
     const { id } = req.params
     const nouvelleHoraire = req.body
 
-    const erreurs = validationResult(req);
+    const erreurs = validationResult(req.body);
 
     if (!erreurs.isEmpty()) {
 
