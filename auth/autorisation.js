@@ -21,3 +21,32 @@ export const verifierToken = (req,res,next)=>{
         }
     })
 }
+
+export const isAdministrateur = async (req, res, next) => {
+
+    //Recuperer l'id a partir de la req
+    const id = req.userId
+
+    //Chercher la personne dans la base de donnees
+
+    try {
+        const user = await Utilisateur.findByPk(id)
+        if (!user) return res.status(404).json({ message: "Cet utilisateur n'existe pas!" })
+
+        //Recuperer le role de la personne 
+        // Mettre uj autre try catch 
+        const role = await user.getRole()
+
+        if (role.categorie.toLowerCase() == 'admin') {
+            next()
+            return
+        } else{
+            return res.status(403).json({ message: "Cette fonctionnalité n'est pas disponible pour votre compte" })
+        }
+
+
+    } catch (error) {
+        res.status(403).json({ message: error.message })
+    }
+
+}
