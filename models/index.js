@@ -22,7 +22,7 @@ Programme.belongsToMany(Cour, { through: 'ProgrammeCour'})
 Cour.belongsToMany(Programme, { through: 'ProgrammeCour'})
 
 Cour.hasMany(Examen)
-Examen.hasOne(Cour)
+Examen.belongsTo(Cour)
 
 Cour.belongsToMany(Horaire, { through: 'CourHoraire'})
 Horaire.belongsToMany(Cour, { through: 'CourHoraire'})
