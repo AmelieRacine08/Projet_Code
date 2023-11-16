@@ -23,7 +23,7 @@ Cour.belongsToMany(Programme, { through: 'ProgrammeCour'})
 
 // Revoir la relation entre ces tables encore
 Cour.hasMany(Examen)
-Examen.hasOne(Cour)
+Examen.belongsTo(Cour)
 
 Cour.belongsToMany(Horaire, { through: 'CourHoraire'})
 Horaire.belongsToMany(Cour, { through: 'CourHoraire'})
