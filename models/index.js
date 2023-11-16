@@ -9,13 +9,13 @@ import Examen from "./Examen.js";
 import Horaire from "./Horaire.js";
 
 //Appliquer les relations (associations)
-Utilisateur.hasOne(Role)
 Role.hasMany(Utilisateur)
+Utilisateur.belongsTo(Role)
 
 Utilisateur.hasOne(Bulletin)
-Bulletin.hasOne(Utilisateur)
+Bulletin.belongsTo(Utilisateur)
 
-Utilisateur.hasOne(Programme)
+Utilisateur.belongsTo(Programme)
 Programme.hasMany(Utilisateur)
 
 Programme.belongsToMany(Cour, { through: 'ProgrammeCour'})

@@ -7,12 +7,12 @@ import bcrypt from "bcryptjs"
 
 export const ajouterUtilisateur = async (req, res) => {
 
-    const { nom, prenom, email, motPasse, dateNaissance, numeroTelephone} = req.body
+    const { nom, prenom, email, motPasse, dateNaissance, numeroTelephone, RoleId} = req.body
 
     //Hacher le mot de passe
     const mdpCrypte = bcrypt.hashSync(motPasse, 10)
 
-    const utilisateur = { nom, prenom, email, motPasse: mdpCrypte, dateNaissance, numeroTelephone}    
+    const utilisateur = { nom, prenom, email, motPasse: mdpCrypte, dateNaissance, numeroTelephone, RoleId}    
 
     const erreurs = validationResult(req);
 

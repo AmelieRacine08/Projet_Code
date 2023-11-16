@@ -40,9 +40,10 @@ export const isAdministrateur = async (req, res, next) => {
         // Recuperer le role de la personne
         try {
             const role = await user.getRole();
+            console.log("Role ici", role)
 
             // Check if the role exists before accessing its properties
-            if (role && role.categorie.toLowerCase() === 'Administration') {
+            if (role && role.categorie.toLowerCase() === 'administration') {
                 next();
             } else {
                 return res.status(403).json({ message: "Cette fonctionnalité n'est pas disponible pour votre compte" });
