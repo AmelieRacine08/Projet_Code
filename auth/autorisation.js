@@ -1,5 +1,5 @@
 //Importer jwt
-import  Jwt  from "jsonwebtoken";
+import  jwt  from "jsonwebtoken";
 
 export const verifierToken = (req,res,next)=>{
     //Recuperation du token
@@ -11,7 +11,7 @@ export const verifierToken = (req,res,next)=>{
     //Recuperer le token sans la partie Bearer
     const token = bearerToken.split(' ')[1]
 
-    Jwt.verify(token,process.env.CODE_SECRET,(err,payload)=>{
+   jwt.verify(token,process.env.CODE_SECRET,(err,payload)=>{
         if(err){
             res.status(401).json({message: err.message})
 
