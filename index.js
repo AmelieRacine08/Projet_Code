@@ -16,13 +16,7 @@ import routesCour from './routes/routeCour.js'
 import routesBulletin from './routes/route.Bulletin.js'
 import routerAuth from './routes/routeAuth.js'
 
-//database.sync({})
-
-const syncDatabase = async () => {
-    await database.sync({});
-  }
-  
-  syncDatabase();
+database.sync({})
 
 const { PORT } = dotenv.config().parsed
 const app = express()
